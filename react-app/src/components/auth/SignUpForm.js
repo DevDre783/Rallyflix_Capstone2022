@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { signUp } from '../../store/session';
 import "./Form.css"
 
@@ -63,6 +63,9 @@ const SignUpForm = () => {
               value={username}
             ></input>
           </div> */}
+          <div className='form__top__text'>
+            <h1>Sign Up</h1>
+          </div>
           <div>
             <input
               type='text'
@@ -91,8 +94,9 @@ const SignUpForm = () => {
               required={true}
             ></input>
           </div>
-          <button type='submit'>Sign Up</button>
+          <button className='signin__form__btn' type='submit'>Sign Up</button>
         </form>
+        <p>Already a member? <Link to={'/login'}>Login</Link></p>
       </div>
     </>
   );

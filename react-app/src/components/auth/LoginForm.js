@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { login } from '../../store/session';
 import "./Form.css"
 
@@ -43,7 +43,7 @@ const LoginForm = () => {
             ))}
           </div>
           <div className='form__top__text'>
-            <h1>Login</h1>
+            <h1>Sign In</h1>
           </div>
           <div>
             <input
@@ -63,8 +63,9 @@ const LoginForm = () => {
               onChange={updatePassword}
             />
           </div>
-            <button type='submit'>Sign In</button>
+            <button className='signin__form__btn' type='submit'>Sign In</button>
         </form>
+        <p>New to Rallyflix? <Link to={'/sign-up'}>Sign up now.</Link></p>
       </div>
     </>
   );

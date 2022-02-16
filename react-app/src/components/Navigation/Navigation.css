@@ -292,7 +292,12 @@ body {
     color: white;
 }
 
+.right__container {
+    width: 10%;
+}
+
 .signin__btn {
+    margin-left: 8%;
     cursor: pointer;
     color: white;
     font-size: 14pt;

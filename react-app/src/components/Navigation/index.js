@@ -4,7 +4,6 @@ import './Navigation.css';
 import { useState } from "react"
 import { Link, NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import SignUpForm from '../auth/SignUpForm';
 
 
 
@@ -24,7 +23,7 @@ return (
     </div>
     <div className='right__container'>
       <div>
-        <Link to={"/login"}><button className='signin__btn'>Sign In</button></Link>
+        <Link to={"/login"}><button className='signin__btn'>Sign In</button></Link><Link to={'/:userId/profiles'}><button className='signin__btn'>Demo</button></Link>
       </div>
       <div className='right-nav'>
         <div className='profile-icon'>{isLoaded}</div>
