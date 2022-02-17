@@ -17,6 +17,8 @@ const SignUpForm = () => {
 
   const handleClick = async (e) => {
     await dispatch(sessionActions.login(username, email, password))
+
+    history.push('/profiles')
   }
 
 
@@ -100,7 +102,7 @@ const SignUpForm = () => {
               required={true}
             ></input>
           </div>
-          <Link to={'/profiles'}><button className='signin__form__btn' type='submit'>Sign Up</button></Link>
+            <button onClick={handleClick} className='signin__form__btn' type='submit'>Sign Up</button>
         </form>
         <p>Already a member? <Link to={'/login'}>Login</Link></p>
       </div>
