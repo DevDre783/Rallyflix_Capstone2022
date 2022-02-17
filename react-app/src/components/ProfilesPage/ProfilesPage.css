@@ -1,0 +1,9 @@
+.page_container {
+    background-color: black;
+    height: 100vh;
+    width: 100vw;
+}
+
+.placeholder {
+    color: white;
+}
