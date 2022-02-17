@@ -38,10 +38,12 @@ function ProfileButton() {
 
   return (
     <>
-      {user ? null : <button className="profile-menu" onClick={openMenu}>
+      {/* {user ? null : */}
+      <button className="profile-menu" onClick={openMenu}>
         <i className="fas fa-bars" />
         <i className="fas fa-user-circle" />
-      </button>}
+      </button>
+      {/* } */}
       {showMenu && (
         <ul className="profile-dropdown">
           <div className="username__container">
@@ -51,10 +53,10 @@ function ProfileButton() {
             <li className="Dd-email">Email: {user?.email}</li>
           </div>
           <div className="my__profile__container" >
-            <FaSmile className="my__profile__smiley"/>
-            <NavLink to={'/my-profile'} className="my__profile"> Profile</NavLink>
+            {/* <FaSmile className="my__profile__smiley"/> */}
+            <NavLink to={''} className="my__profile"> Manage Profiles</NavLink>
           </div>
-          {user ? <button className="logout-btn" onClick={handleLogout}>logout</button> : null}
+          <button className="logout-btn" onClick={handleLogout}>logout</button>
         </ul>
       )}
     </>

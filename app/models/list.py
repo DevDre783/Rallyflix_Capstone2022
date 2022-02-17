@@ -10,5 +10,14 @@ class List(db.Model):
     video_id = db.Column(db.Integer, db.ForeignKey("videos.id"), nullable=False)
 
 
-    profile_info = db.relationship("Profile", back_populates="user_info")
+    profile_info = db.relationship("Profile", back_populates="list_info")
     video_info = db.relationship("Video", back_populates="list_info")
+
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'profile_id': self.profile_id,
+            'video_id': self.video_id
+        }

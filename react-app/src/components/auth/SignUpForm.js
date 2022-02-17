@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import { signUp } from '../../store/session';
+import * as sessionActions from "../../store/session"
 import "./Form.css"
 
 const SignUpForm = () => {
@@ -12,6 +13,13 @@ const SignUpForm = () => {
   const [repeatPassword, setRepeatPassword] = useState('');
   const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  const handleClick = async (e) => {
+      await dispatch(sessionActions.login('user.username', 'user.email', 'user.password'))
+      history.push('/api/profiles/')
+  }
+
 
   const onSignUp = async (e) => {
     e.preventDefault();
@@ -53,18 +61,17 @@ const SignUpForm = () => {
               <div key={ind}>{error}</div>
             ))}
           </div>
-          {/* <div>
-            <label>User Name</label>
+          <div className='form__top__text'>
+            <h1>Sign Up</h1>
+          </div>
+          <div>
             <input
-            placeholder='Username'
+              placeholder='Username'
               type='text'
               name='username'
               onChange={updateUsername}
               value={username}
             ></input>
-          </div> */}
-          <div className='form__top__text'>
-            <h1>Sign Up</h1>
           </div>
           <div>
             <input
@@ -94,7 +101,7 @@ const SignUpForm = () => {
               required={true}
             ></input>
           </div>
-          <button className='signin__form__btn' type='submit'>Sign Up</button>
+          <button onClick={handleClick} className='signin__form__btn' type='submit'>Sign Up</button>
         </form>
         <p>Already a member? <Link to={'/login'}>Login</Link></p>
       </div>
