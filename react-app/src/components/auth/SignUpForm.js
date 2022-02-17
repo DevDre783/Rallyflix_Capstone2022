@@ -16,8 +16,7 @@ const SignUpForm = () => {
   const history = useHistory();
 
   const handleClick = async (e) => {
-      await dispatch(sessionActions.login('user.username', 'user.email', 'user.password'))
-      history.push('/api/profiles/')
+    await dispatch(sessionActions.login(username, email, password))
   }
 
 
@@ -101,7 +100,7 @@ const SignUpForm = () => {
               required={true}
             ></input>
           </div>
-          <button onClick={handleClick} className='signin__form__btn' type='submit'>Sign Up</button>
+          <Link to={'/profiles'}><button className='signin__form__btn' type='submit'>Sign Up</button></Link>
         </form>
         <p>Already a member? <Link to={'/login'}>Login</Link></p>
       </div>

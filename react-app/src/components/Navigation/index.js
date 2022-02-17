@@ -17,7 +17,7 @@ function Navbar({ isLoaded }) {
 
   const handleClick = async (e) => {
       await dispatch(sessionActions.login('demo@aa.io', 'password'))
-      history.push('/api/profiles/')
+      history.push('/profiles')
   }
 
 
@@ -32,7 +32,7 @@ function Navbar({ isLoaded }) {
       {user ? null :
         <div className='right__container'>
           <div>
-            <Link to={"/login"}><button className='signin__btn'>Sign In</button></Link><Link to={'/api/profiles'}><button onClick={handleClick} className='signin__btn'>Demo</button></Link>
+            <Link to={"/login"}><button className='signin__btn'>Sign In</button></Link><Link to={'/profiles'}><button onClick={handleClick} className='signin__btn'>Demo</button></Link>
           </div>
           <div className='right-nav'>
             <div className='profile-icon'>{isLoaded}</div>
