@@ -10,6 +10,8 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+
+
 .navbar {
     z-index: 99;
     position: fixed;
@@ -46,7 +48,7 @@ body {
 .navbar NavLink {
     position: fixed;
     left: 40px;
-    top: 40px;
+    /* top: 40px; */
     z-index: 10;
     cursor: pointer;
 }
