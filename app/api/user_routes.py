@@ -19,10 +19,10 @@ def user(id):
     user = User.query.get(id)
     return user.to_dict()
 
-# getting profiles belonging to a user
-@user_routes.route('/<int:id>/profiles')
-@login_required
-def user_profiles(id):
-    user = User.query.get(id)
-    profiles = Profile.query.filter(Profile.user_id == id).all()
-    return {'user': user.to_dict(), 'profiles': [profile.to_dict() for profile in profiles]}
+
+# @user_routes.route('/<int:id>/profiles')
+# @login_required
+# def user_profiles(id):
+#     user = User.query.get(id)
+#     profiles = Profile.query.filter(Profile.user_id == id).all()
+#     return {'user': user.to_dict(), 'profiles': [profile.to_dict() for profile in profiles]}

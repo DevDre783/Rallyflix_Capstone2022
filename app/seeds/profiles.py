@@ -7,10 +7,13 @@ def seed_profiles():
 
     profile_3 = Profile(user_id=1, name="Jerry")
 
+    profile_4 = Profile(user_id=2, name="Bob")
+
 
     db.session.add(profile_1)
     db.session.add(profile_2)
     db.session.add(profile_3)
+    db.session.add(profile_4)
 
     db.session.commit()
 
