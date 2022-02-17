@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 from flask_login import login_required
-from app.models import Video, User, db
+from app.models import Video, Profile, User, db
 
 video_routes = Blueprint('videos', __name__)
 
