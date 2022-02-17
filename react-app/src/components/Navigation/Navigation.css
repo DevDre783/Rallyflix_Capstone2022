@@ -10,41 +10,6 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* .off__click {
-    z-index: -99;
-    background: transparent;
-    height: 3000px;
-    width: 100%;
-} */
-
-.products__tab, .learn__tab, .whoweare__tab, svg {
-    transform: translateY(25%);
-    text-decoration: none;
-    display: inline-block;
-}
-
-.all__links {
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%);
-    margin-bottom: 0.5%;
-}
-
-.user__balance {
-    color: grey;
-    font-size: 14.5pt;
-    font-weight: bold;
-    margin-right: 6%;
-    display: flex;
-    flex-direction: row;
-}
-
-.my__cash {
-    padding-left: 5%;
-    color: rgb(0, 221, 0);
-}
-
 .navbar {
     z-index: 99;
     position: fixed;
@@ -56,6 +21,17 @@ body {
     align-items: center;
     height: 80px;
     padding: 0 24px;
+}
+
+.profile__icon {
+    margin-right: 1%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: blue; */
+    height: 100%;
+    position: absolute;
+    right: 0;
 }
 
 .navbar a {
@@ -135,10 +111,11 @@ body {
 }
 
 .profile-menu {
-    appearance: none;
+    /* z-index: -1; */
+    /* appearance: none; */
     /* background: transparent; */
-    /* border: 1px solid #DDDDDD; */
-    /* color: #222222; */
+    border: 1px solid #DDDDDD;
+    color: #222222;
     cursor: pointer;
     font-family: inherit;
     font-size: inherit;
@@ -147,20 +124,14 @@ body {
     margin: 0px;
     outline: none;
     overflow: visible;
-    /* padding: 5px 5px 5px 12px; */
+    padding: 5px 5px 5px 12px;
     text-align: inherit;
     text-decoration: none;
     user-select: auto;
     align-items: center;
     border-radius: 50%;
     border: none;
-    /* height: 42px; */
-}
-
-.profile-picture {
-    height: 40px;
-    width: 35px;
-    border-radius: 50%;
+    height: 42px;
 }
 
 .profile-menu:hover {
@@ -169,6 +140,7 @@ body {
 
 .logo__container {
     display: flex;
+    /* position: fixed; */
     justify-content: center;
     align-items: center;
     margin-left: 0.7%;
@@ -198,7 +170,8 @@ body {
 }
 
 .profile-dropdown {
-    min-width: 200px;
+    min-width: 300px;
+    top: 75px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -208,7 +181,7 @@ body {
     margin-right: 0.5%;
     position: absolute;
     right: 0;
-    margin-top: 1%;
+    margin-top: 15%;
     background-color: rgb(87, 87, 87);
     border: rgb(109, 109, 109) 5px solid;
 }
@@ -239,7 +212,7 @@ body {
     border-bottom: 1px black solid;
 }
 
-.my__profile {
+/* .my__profile {
     text-decoration: none;
     color: white;
     font-size: 14pt;
@@ -262,7 +235,7 @@ body {
 
 .my__profile__container:hover {
     color: rgb(255, 251, 0);
-}
+} */
 
 .logout-btn {
     background: none;

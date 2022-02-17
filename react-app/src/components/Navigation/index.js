@@ -1,40 +1,50 @@
 import React from 'react';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
-import { useState } from "react"
-import { Link, NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useState } from "react";
+import * as sessionActions from '../../store/session';
+import { Link, NavLink, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 
 
 function Navbar({ isLoaded }) {
-const user = useSelector(state => state.session.user)
+  const user = useSelector(state => state.session.user)
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const handleClick = async (e) => {
+      await dispatch(sessionActions.login('demo@aa.io', 'password'))
+      history.push('/api/profiles/')
+  }
 
 
-
-return (
-  <nav className='navbar'>
-    <div className='logo__container'>
-      <Link to={'/'}><h1>Rallyflix</h1></Link>
-    </div>
-    <div className=''>
-
-    </div>
-    <div className='right__container'>
-      <div>
-        <Link to={"/login"}><button className='signin__btn'>Sign In</button></Link><Link to={'/:userId/profiles'}><button className='signin__btn'>Demo</button></Link>
+  return (
+    <nav className='navbar'>
+      <div className='logo__container'>
+        <Link to={'/'}><h1>Rallyflix</h1></Link>
       </div>
-      <div className='right-nav'>
-        <div className='profile-icon'>{isLoaded}</div>
+      <div className=''>
+
       </div>
-      {!user ? null :
-      <div className='profile__icon'>
-        <ProfileButton/>
-      </div>
+      {user ? null :
+        <div className='right__container'>
+          <div>
+            <Link to={"/login"}><button className='signin__btn'>Sign In</button></Link><Link to={'/api/profiles'}><button onClick={handleClick} className='signin__btn'>Demo</button></Link>
+          </div>
+          <div className='right-nav'>
+            <div className='profile-icon'>{isLoaded}</div>
+          </div>
+        </div>
       }
-    </div>
-  </nav>
+        {!user ? null :
+        <div className='profile__icon'>
+          <ProfileButton/>
+        </div>
+       }
+    </nav>
   );
 }
 

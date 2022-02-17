@@ -10,3 +10,12 @@ class Profile(db.Model):
 
 
     user_info = db.relationship("User", back_populates="profile_info")
+    list_info = db.relationship("List", back_populates="profile_info")
+
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'name': self.name
+        }
