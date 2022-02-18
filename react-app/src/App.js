@@ -5,8 +5,8 @@ import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignUpForm';
 import Navbar from "./components/Navigation"
 import ProtectedRoute from './components/auth/ProtectedRoute';
-import UsersList from './components/UsersList';
-import User from './components/User';
+// import UsersList from './components/UsersList';
+// import User from './components/User';
 import SplashPage from './components/SplashPage';
 import Footer from './components/Footer';
 import ProfilesPage from './components/ProfilesPage';
@@ -41,15 +41,15 @@ function App() {
         <Route path='/sign-up' exact={true}>
           <SignUpForm />
         </Route>
-        <ProtectedRoute path='/users' exact={true} >
+        {/* <ProtectedRoute path='/users' exact={true} >
           <UsersList/>
         </ProtectedRoute>
         <ProtectedRoute path='/users/:userId' exact={true} >
           <User />
-        </ProtectedRoute>
-        <Route path="/profiles" exact={true}>
+        </ProtectedRoute> */}
+        <ProtectedRoute path="/profiles" exact={true}>
           <ProfilesPage />
-        </Route>
+        </ProtectedRoute>
       </Switch>
     </BrowserRouter>
   );
