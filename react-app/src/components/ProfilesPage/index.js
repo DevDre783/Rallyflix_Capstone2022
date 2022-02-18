@@ -49,8 +49,16 @@ function ProfilesPage() {
         setShowAddForm(false)
     }
 
+    // const handleEditProfile = (e) => {
+    //     e.preventDefault()
+
+    //     dispatch(editProfileName(userId, profiles.id))
+    //     dispatch(getProfiles(userId))
+    // }
+
     useEffect(() => {
         dispatch(getProfiles(userId))
+        // ?????
     }, [dispatch])
 
     return (
@@ -60,8 +68,8 @@ function ProfilesPage() {
                     {profiles?.map(profile => (
                         <div className='profile'>
                             <h1 className='placeholder'>{profile?.name}</h1>
-                            <button onClick={handleEditProfile}><FaEdit /></button>
-                            <button><FaTrash /></button>
+                            <button onClick={handleEditProfile}><FaEdit className='editProfileBtn'/></button>
+                            <button><FaTrash className='deleteProfileBtn'/></button>
                         </div>
                     ))}
                     <button onClick={addProfileForm}><FaPlusCircle className='Add__profile__btn' /></button>
@@ -88,6 +96,7 @@ function ProfilesPage() {
                                 onChange={(e) => setEditProfileName(e.target.value)}
                                 placeholder="Edit Name"
                             />
+                            <button onClick={handleEditProfile}>Submit</button>
                         </div>
                     )}
                 </div>

@@ -24,3 +24,30 @@
 .profile {
     color: white;
 }
+
+.profile button {
+    border: none;
+    background: none;
+}
+
+.editProfileBtn {
+    color: white;
+    transform: scale(1.5);
+}
+
+.deleteProfileBtn {
+    color: rgb(214, 0, 0);
+    transform: scale(1.5);
+}
+
+.editProfileBtn:hover {
+    cursor: pointer;
+    color: white;
+    transform: scale(1.65);
+}
+
+.deleteProfileBtn:hover {
+    cursor: pointer;
+    color: red;
+    transform: scale(1.65);
+}
