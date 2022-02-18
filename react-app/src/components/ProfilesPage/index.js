@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 // import { useSelector } from 'react-redux';
 // import { Link, NavLink, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewProfile, getProfiles } from "../../store/profile";
+import { addNewProfile, deleteUserProfile, editUserProfile, getProfiles } from "../../store/profile";
 import { useParams } from 'react-router-dom';
 import { FaEdit, FaPlusCircle, FaSmile, FaTrash } from 'react-icons/fa';
 
@@ -13,6 +13,7 @@ import { FaEdit, FaPlusCircle, FaSmile, FaTrash } from 'react-icons/fa';
 function ProfilesPage() {
     const [newProfile, setNewProfile] = useState("")
     const [editProfileName, setEditProfileName] = useState("")
+
     const [showAddForm, setShowAddForm] = useState(false)
     const [showEditForm, setShowEditForm] = useState(false)
 
@@ -34,14 +35,12 @@ function ProfilesPage() {
         setShowAddForm(true)
     }
 
-    const handleEditProfile = (e) => {
-        e.preventDefault()
-
-        setShowEditForm(true)
-    }
-
     const handleAddProfile = (e) => {
         e.preventDefault()
+
+        if (profiles.length >= 4) {
+            return "CANNOT ADD MORE THAN 4 PROFILES"
+        }
 
         dispatch(addNewProfile(userId, newProfile))
         dispatch(getProfiles(userId))
@@ -49,12 +48,27 @@ function ProfilesPage() {
         setShowAddForm(false)
     }
 
-    // const handleEditProfile = (e) => {
-    //     e.preventDefault()
+    const handleEditProfileForm = (e) => {
+        e.preventDefault()
 
-    //     dispatch(editProfileName(userId, profiles.id))
-    //     dispatch(getProfiles(userId))
-    // }
+        setShowEditForm(true)
+    }
+
+    const handleDeleteProfile = (e, id) => {
+        e.preventDefault()
+        let user_id = user.id
+        console.log("IN PROFILE COMPONENT", id, user_id)
+        dispatch(deleteUserProfile(id, user_id))
+    }
+
+
+    const handleEditProfile = (e, id) => {
+        e.preventDefault()
+        let user_id = user.id
+        let newName = editProfileName
+
+        dispatch(editUserProfile(user_id, newName, id))
+    }
 
     useEffect(() => {
         dispatch(getProfiles(userId))
@@ -65,14 +79,31 @@ function ProfilesPage() {
         <>
             <div className='page_container'>
                 <div className='users__profiles'>
+                    {/* {profiles.length < 4 } */}
                     {profiles?.map(profile => (
                         <div className='profile'>
                             <h1 className='placeholder'>{profile?.name}</h1>
-                            <button onClick={handleEditProfile}><FaEdit className='editProfileBtn'/></button>
-                            <button><FaTrash className='deleteProfileBtn'/></button>
+                            <button onClick={handleEditProfileForm}><FaEdit className='editProfileBtn' /></button>
+                            <button onClick={(e) => { handleDeleteProfile(e, profile?.id) }}><FaTrash className='deleteProfileBtn' /></button>
+                            <div className='edit__profile'>
+                                {showEditForm && (
+                                    <div className='edit__profile'>
+                                        <input
+                                            type="text"
+                                            name="edit-profile"
+                                            value={editProfileName}
+                                            onChange={(e) => setEditProfileName(e.target.value)}
+                                            placeholder={profile.name}
+                                        />
+                                        <button type="submit" onClick={(e) => {handleEditProfile(e, profile?.id) }}>Submit</button>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     ))}
+                    {profiles.length < 4 &&
                     <button onClick={addProfileForm}><FaPlusCircle className='Add__profile__btn' /></button>
+                    }
                 </div>
                 {showAddForm && (
                     <div className='add__profile'>
@@ -83,23 +114,9 @@ function ProfilesPage() {
                             onChange={(e) => setNewProfile(e.target.value)}
                             placeholder="Add Profile"
                         />
-                        <button onClick={handleAddProfile}>Add</button>
+                        <button type="submit" onClick={handleAddProfile}>Add</button>
                     </div>
                 )}
-                <div className='edit__profile'>
-                    {showEditForm && (
-                        <div className='edit__profile'>
-                            <input
-                                type="text"
-                                name="edit-profile"
-                                value={editProfileName}
-                                onChange={(e) => setEditProfileName(e.target.value)}
-                                placeholder="Edit Name"
-                            />
-                            <button onClick={handleEditProfile}>Submit</button>
-                        </div>
-                    )}
-                </div>
             </div>
         </>
     )

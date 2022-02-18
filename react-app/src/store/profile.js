@@ -2,7 +2,7 @@ import { user } from "pg/lib/defaults";
 
 const LOAD = "profiles/LOAD";
 const ADD_PROFILE = "profiles/ADD_PROFILE"
-const EDIT_PROFILE = "profiles/EDIT_PROFILE"
+// const EDIT_PROFILE = "profiles/EDIT_PROFILE"
 // const DELETE_PROFILE = "profiles/DELETE_PROFILE"
 
 
@@ -15,6 +15,13 @@ const addProfile = (profile) => ({
     type: ADD_PROFILE,
     profile
 });
+
+// const deleteProfile = (profile) => {
+//     return {
+//         type: DELETE_PROFILE,
+//         profile
+//     }
+// }
 
 // const editProfile = (id) => ({
 //     type: EDIT_PROFILE,
@@ -50,23 +57,42 @@ export const addNewProfile = (userId, name) => async dispatch => {
 }
 
 
-// export const editNewProfile = (userId, name) => async dispatch => {
-//     console.log("WORKING???????", userId, name )
+export const editUserProfile = (user_id, newName, id) => async (dispatch) => {
+    console.log("IN STORE PROFILE 1", id, newName, user_id)
+    const res = await fetch(`/api/profiles/${id}`, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            user_id,
+            newName
+        })
+    })
 
-//     const response = await fetch(`/api/profiles/`, {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify({
-//             "user_id": userId,
-//             "name": name
-//         })
-//     })
+    if(res.ok) {
+        const profiles_list = await res.json()
+        // dispatch(deleteProfile(id));
+        console.log("THE PROFILES LIST", profiles_list)
+        dispatch(loadProfiles(profiles_list));
+    }
+}
 
-//     if (response.ok) {
-//         const new_profile_name = await response.json();
-//         dispatch(editProfile(new_profile_name))
-//     }
-// }
+export const deleteUserProfile = (id, user_id) => async (dispatch) => {
+    console.log("IN STORE PROFILE 1", id, user_id)
+    const res = await fetch(`/api/profiles/${id}`, {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            user_id
+        })
+    })
+
+    if(res.ok) {
+        const profiles_list = await res.json()
+        // dispatch(deleteProfile(id));
+        console.log("THE PROFILES LIST", profiles_list)
+        dispatch(loadProfiles(profiles_list));
+    }
+}
 
 
 const initialState = {
