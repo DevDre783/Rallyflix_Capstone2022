@@ -10,7 +10,7 @@ profile_routes = Blueprint('profiles', __name__)
 @profile_routes.route('/<int:user_id>')
 @login_required
 def load_user_profiles(user_id):
-    user_profiles = Profile.query.order_by(Profile.id).filter(Profile.user_id == user_id).all()
+    user_profiles = Profile.query.order_by(Profile.name).filter(Profile.user_id == user_id).all()
 
     # print("???????????", user_profiles)
     return jsonify([profile.to_dict() for profile in user_profiles])
@@ -36,3 +36,41 @@ def add_profile():
         return jsonify(profile.to_dict())
 
     return make_response({'errors': 'Error(s) on creating new profile.'})
+
+
+# EDIT ROUTE HERE
+@profile_routes.route('/<int:id>', methods=['PUT'])
+@login_required
+def edit_profile(id):
+    object = request.json
+    name = object["newName"]
+    user_id = object["user_id"]
+
+    print("USERS ID???????????", name, user_id)
+
+    currentProfile = Profile.query.get(id)
+    currentProfile.name = name
+
+    db.session.add(currentProfile)
+    db.session.commit()
+
+    userProfiles = Profile.query.filter(Profile.user_id == user_id).all()
+
+    return jsonify([profile.to_dict() for profile in userProfiles])
+
+
+
+@profile_routes.route('/<int:id>', methods=["DELETE"])
+@login_required
+def delete_profile(id):
+    print("IN PROFILE API !!!!!!!!!!!!!!!!!!!!!")
+    object = request.json
+    user_id = object["user_id"]
+    print("USERS ID???????????", user_id)
+    currentProfile = Profile.query.get(id)
+    db.session.delete(currentProfile)
+    db.session.commit()
+
+    userProfiles = Profile.query.filter(Profile.user_id == user_id).all()
+
+    return jsonify([profile.to_dict() for profile in userProfiles])
