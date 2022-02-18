@@ -9,7 +9,7 @@ class Profile(db.Model):
     name = db.Column(db.String(150), nullable=False)
 
     user_info = db.relationship("User", back_populates="profile_info")
-    list_info = db.relationship("List", back_populates="profile_info")
+    list_info = db.relationship("List", back_populates="profile_info", cascade="all, delete-orphan")
 
 
     def to_dict(self):

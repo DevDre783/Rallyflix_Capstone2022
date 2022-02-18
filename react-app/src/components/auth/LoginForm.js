@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import { login } from '../../store/session';
+import * as sessionActions from "../../store/session"
 import "./Form.css"
 
 
@@ -11,6 +12,13 @@ const LoginForm = () => {
   const [password, setPassword] = useState('');
   const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  const handleClick = async (e) => {
+    await dispatch(sessionActions.login( email, password))
+
+    history.push('/profiles')
+  }
 
   const onLogin = async (e) => {
     e.preventDefault();
@@ -63,7 +71,7 @@ const LoginForm = () => {
               onChange={updatePassword}
             />
           </div>
-            <button className='signin__form__btn' type='submit'>Sign In</button>
+            <button onClick={handleClick} className='signin__form__btn' type='submit'>Sign In</button>
         </form>
         <p>New to Rallyflix? <Link to={'/sign-up'}>Sign up now.</Link></p>
       </div>
