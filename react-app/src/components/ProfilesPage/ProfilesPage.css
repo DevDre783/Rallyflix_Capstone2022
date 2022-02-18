@@ -1,9 +1,26 @@
 .page_container {
     background-color: black;
+    z-index: -1;
     height: 100vh;
     width: 100vw;
+    /* margin-top: 20%; */
+}
+
+.users__profiles {
+    /* background-color: blue; */
+    display: flex;
+    /* z-index: 1; */
+    /* position: absolute; */
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    padding-top: 21%;
 }
 
 .placeholder {
+    color: white;
+}
+
+.profile {
     color: white;
 }
