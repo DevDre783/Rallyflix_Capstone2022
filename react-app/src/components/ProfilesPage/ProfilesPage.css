@@ -13,8 +13,44 @@
     /* position: absolute; */
     justify-content: space-around;
     align-items: center;
+    align-content: center;
+    justify-items: center;
     flex-direction: row;
     padding-top: 21%;
+    margin-right: 25%;
+    margin-left: 25%;
+}
+
+.add__profile {
+    display: flex;
+    justify-content: center;
+    margin-top: 6%;
+}
+
+.add__profile input {
+    text-align: left;
+    font-size: 12pt;
+    outline: none;
+    border: none;
+    border-radius: 2px;
+    padding: 18px;
+    width: 350px;
+    background-color: rgb(66, 63, 63);
+    color: white;
+}
+
+.add__profile button {
+    padding: 15px;
+    padding-left: 25px;
+    padding-right: 25px;
+    border: none;
+    color: white;
+    background-color: rgb(0, 141, 0);
+}
+
+.add__profile button:hover {
+    cursor: pointer;
+    background-color: rgb(0, 172, 0);
 }
 
 .placeholder {
@@ -23,21 +59,64 @@
 
 .profile {
     color: white;
+    text-align: center;
+    justify-items: center;
 }
 
-/* .profile button {
+.profile__img {
+    height: 200px;
+    width: 200px;
+    transition: 0.5s ease-in-out;
+}
+
+.profile__img:hover {
+    /* background: transparent; */
+    cursor: pointer;
+    transform: scale(1.05, 1.05);
+  transition: 0.5s ease-in-out;
+}
+
+.profile button {
     border: none;
     background: none;
-} */
+    transform: scale(1.2);
+    margin-right: 5%;
+}
+
+.add__profile__btn {
+    border: none;
+    height: 150px;
+    width: 150px;
+    background: none;
+    margin-bottom: 6.5%;
+}
+
+.add__profile__btn:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.add__profile__icon {
+    background-color: rgb(87, 87, 87);
+    border: none;
+    height: 150px;
+    width: 150px;
+}
+
+.add__profile__icon:hover {
+    background-color: rgb(129, 129, 129);
+}
 
 .editProfileBtn {
     color: white;
     transform: scale(1.5);
+    padding-left: 15%;
 }
 
 .deleteProfileBtn {
     color: rgb(214, 0, 0);
     transform: scale(1.5);
+    /* margin-right: -15%; */
 }
 
 .editProfileBtn:hover {
@@ -49,5 +128,26 @@
 .deleteProfileBtn:hover {
     cursor: pointer;
     color: red;
-    transform: scale(1.65);
+    transform: scale(1.55);
+}
+
+.edit__profile button {
+    color: white;
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    background-color: green;
+}
+
+.edit__component {
+    width: 11.5%;
+    position: absolute;
+    display: flex;
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-around;
+    margin-left: -1.5%;
 }

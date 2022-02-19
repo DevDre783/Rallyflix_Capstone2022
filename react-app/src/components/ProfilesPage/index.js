@@ -3,29 +3,21 @@ import './ProfilesPage.css';
 import { useState, useEffect } from "react";
 // import * as sessionActions from '../../store/profile';
 // import { useSelector } from 'react-redux';
-// import { Link, NavLink, useHistory } from 'react-router-dom';
+import { Link, NavLink, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewProfile, deleteUserProfile, editUserProfile, getProfiles } from "../../store/profile";
-import { useParams } from 'react-router-dom';
-import { FaEdit, FaPlusCircle, FaSmile, FaTrash } from 'react-icons/fa';
+import { addNewProfile, deleteUserProfile, getProfiles } from "../../store/profile";
+// import { useParams } from 'react-router-dom';
+import { FaPlusCircle, FaTrash } from 'react-icons/fa';
 import EditProfile from '../EditProfile';
 
 
 function ProfilesPage() {
     const [newProfile, setNewProfile] = useState("")
-    const [editProfileName, setEditProfileName] = useState("")
-
     const [showAddForm, setShowAddForm] = useState(false)
-    const [showEditForm, setShowEditForm] = useState(false)
-
-    console.log("new profile", newProfile);
     const profiles = useSelector(state => state?.profile?.entries);
     const user = useSelector(state => state?.session?.user);
-
     const dispatch = useDispatch()
     const userId = user.id
-
-    // console.log("hhhhiiiiiiii", userId)
 
     // const currProfiles = profiles?.filter(profile => console.log("FLAG", profile))
     // console.log("hiuhdihiwdhihdi", currProfiles)
@@ -49,12 +41,6 @@ function ProfilesPage() {
         setShowAddForm(false)
     }
 
-    const handleEditProfileForm = (e) => {
-        e.preventDefault()
-
-        setShowEditForm(true)
-    }
-
     const handleDeleteProfile = (e, id) => {
         e.preventDefault()
         let user_id = user.id
@@ -62,19 +48,10 @@ function ProfilesPage() {
         dispatch(deleteUserProfile(id, user_id))
     }
 
-
-    const handleEditProfile = (e, id) => {
-        e.preventDefault()
-        let user_id = user.id
-        let newName = editProfileName
-
-        dispatch(editUserProfile(user_id, newName, id))
-    }
-
     useEffect(() => {
         dispatch(getProfiles(userId))
         // ?????
-    }, [dispatch])
+    }, [dispatch, userId])
 
     return (
         <>
@@ -83,13 +60,16 @@ function ProfilesPage() {
                     {/* {profiles.length < 4 } */}
                     {profiles?.map(profile => (
                         <div className='profile'>
+                            <Link to={`/browse/${profile.id}`}><img className='profile__img' src='https://i.pinimg.com/originals/e3/94/30/e39430434d2b8207188f880ac66c6411.png'></img></Link>
                             <h1 className='placeholder'>{profile?.name}</h1>
-                            <button onClick={(e) => { handleDeleteProfile(e, profile?.id) }}><FaTrash className='deleteProfileBtn' /></button>
-                            <EditProfile profile={profile}/>
+                            <div className="edit__component">
+                                <EditProfile profile={profile} className="something"/>
+                                <button className='deleteProfileBtn' onClick={(e) => { handleDeleteProfile(e, profile?.id) }}><FaTrash  className='deleteProfileBtn'/></button>
+                            </div>
                         </div>
                     ))}
                     {profiles.length < 4 &&
-                    <button onClick={addProfileForm}><FaPlusCircle className='Add__profile__btn' /></button>
+                        <button className='add__profile__btn' onClick={addProfileForm}><FaPlusCircle className='add__profile__icon' /></button>
                     }
                 </div>
                 {showAddForm && (

@@ -1,19 +1,19 @@
 import React from 'react';
-import '../ProfilesPage/ProfilesPage.css';
+import './EditProfileStyle.css';
 import { useState, useEffect } from "react";
 // import * as sessionActions from '../../store/profile';
 // import { useSelector } from 'react-redux';
 // import { Link, NavLink, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewProfile, deleteUserProfile, editUserProfile, getProfiles } from "../../store/profile";
-import { useParams } from 'react-router-dom';
-import { FaEdit, FaPlusCircle, FaSmile, FaTrash } from 'react-icons/fa';
+import { editUserProfile, getProfiles } from "../../store/profile";
+// import { useParams } from 'react-router-dom';
+import { FaEdit } from 'react-icons/fa';
 
 
 function EditProfile({profile}) {
     const [editProfileName, setEditProfileName] = useState("")
     const [showEditForm, setShowEditForm] = useState(false)
-    const profiles = useSelector(state => state?.profile?.entries);
+    // const profiles = useSelector(state => state?.profile?.entries);
     const user = useSelector(state => state?.session?.user);
     const dispatch = useDispatch()
     const userId = user.id
@@ -36,7 +36,7 @@ function EditProfile({profile}) {
     useEffect(() => {
         dispatch(getProfiles(userId))
         // ?????
-    }, [dispatch])
+    }, [dispatch, userId])
 
 
     return (
