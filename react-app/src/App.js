@@ -5,7 +5,7 @@ import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignUpForm';
 import Navbar from "./components/Navigation"
 import ProtectedRoute from './components/auth/ProtectedRoute';
-
+import BrowsePage from './components/BrowsePage';
 // import UsersList from './components/UsersList';
 // import User from './components/User';
 import SplashPage from './components/SplashPage';
@@ -51,9 +51,9 @@ function App() {
         <ProtectedRoute path="/profiles" exact={true}>
           <ProfilesPage />
         </ProtectedRoute>
-        {/* <ProtectedRoute path="/browse" exact={true}>
+        <ProtectedRoute path="/browse/:profileId" exact={true}>
           <BrowsePage />
-        </ProtectedRoute> */}
+        </ProtectedRoute>
       </Switch>
     </BrowserRouter>
   );

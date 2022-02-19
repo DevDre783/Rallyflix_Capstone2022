@@ -1,0 +1,13 @@
+.page__container {
+    background-color: black;
+    z-index: 1;
+    height: 100vh;
+    width: 100vw;
+    /* margin-top: 20%; */
+}
+
+.page__container h1 {
+    color: white;
+    padding-top: 10%;
+    padding-left: 10%;
+}

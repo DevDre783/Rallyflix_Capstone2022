@@ -7,13 +7,15 @@ const loadVideos = videos => ({
 })
 
 
-export const getVideos = (profileId) => async dispatch => {
-    console.log("HEEELLLLOOOOOO", profileId)
-    const response = await fetch(`/api/browse/${profileId}`);
+export const getVideos = (profile_id) => async dispatch => {
+    console.log("HEEELLLLOOOOOO", profile_id)
+
+    const response = await fetch(`/api/browse/${profile_id}`);
 
     if (response.ok) {
         const videos = await response.json();
         dispatch(loadVideos(videos));
+        return videos;
     }
 }
 
