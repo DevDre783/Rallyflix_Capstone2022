@@ -10,8 +10,6 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-
-
 .navbar {
     z-index: 99;
     position: fixed;
