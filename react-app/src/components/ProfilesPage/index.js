@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addNewProfile, deleteUserProfile, editUserProfile, getProfiles } from "../../store/profile";
 import { useParams } from 'react-router-dom';
 import { FaEdit, FaPlusCircle, FaSmile, FaTrash } from 'react-icons/fa';
+import EditProfile from '../EditProfile';
 
 
 function ProfilesPage() {
@@ -83,22 +84,8 @@ function ProfilesPage() {
                     {profiles?.map(profile => (
                         <div className='profile'>
                             <h1 className='placeholder'>{profile?.name}</h1>
-                            <button onClick={handleEditProfileForm}><FaEdit className='editProfileBtn' /></button>
                             <button onClick={(e) => { handleDeleteProfile(e, profile?.id) }}><FaTrash className='deleteProfileBtn' /></button>
-                            <div className='edit__profile'>
-                                {showEditForm && (
-                                    <div className='edit__profile'>
-                                        <input
-                                            type="text"
-                                            name="edit-profile"
-                                            value={editProfileName}
-                                            onChange={(e) => setEditProfileName(e.target.value)}
-                                            placeholder={profile.name}
-                                        />
-                                        <button type="submit" onClick={(e) => {handleEditProfile(e, profile?.id) }}>Submit</button>
-                                    </div>
-                                )}
-                            </div>
+                            <EditProfile profile={profile}/>
                         </div>
                     ))}
                     {profiles.length < 4 &&
