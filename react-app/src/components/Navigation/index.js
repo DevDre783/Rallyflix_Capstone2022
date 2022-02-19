@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 function Navbar({ isLoaded }) {
   const user = useSelector(state => state.session.user)
+  // const profiles = useSelector(state => state?.profile?.entries);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -32,6 +33,9 @@ function Navbar({ isLoaded }) {
       {user ? null :
         <div className='right__container'>
           <div>
+            <a>My Lists</a>
+          </div>
+          <div>
             <Link to={"/login"}><button className='signin__btn'>Sign In</button></Link><Link to={'/profiles'}><button onClick={handleClick} className='signin__btn'>Demo</button></Link>
           </div>
           <div className='right-nav'>
@@ -40,9 +44,10 @@ function Navbar({ isLoaded }) {
         </div>
       }
         {!user ? null :
-        <div className='profile__icon'>
-          <ProfileButton/>
-        </div>
+          <div className='profile__icon'>
+            <Link to={'/my-lists'}>My Lists</Link>
+            <ProfileButton/>
+          </div>
        }
     </nav>
   );

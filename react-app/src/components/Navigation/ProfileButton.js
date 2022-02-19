@@ -54,7 +54,7 @@ function ProfileButton() {
           </div>
           <div className="my__profile__container" >
             {/* <FaSmile className="my__profile__smiley"/> */}
-            <NavLink to={''} className="my__profile"> Manage Profiles</NavLink>
+            <NavLink to={'/profiles'} className="my__profile"> Switch Profiles</NavLink>
           </div>
           <button className="logout-btn" onClick={handleLogout}>logout</button>
         </ul>
