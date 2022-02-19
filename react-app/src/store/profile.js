@@ -1,5 +1,3 @@
-import { user } from "pg/lib/defaults";
-
 const LOAD = "profiles/LOAD";
 const ADD_PROFILE = "profiles/ADD_PROFILE"
 // const EDIT_PROFILE = "profiles/EDIT_PROFILE"
