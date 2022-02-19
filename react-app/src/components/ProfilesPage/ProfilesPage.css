@@ -66,14 +66,15 @@
 .profile__img {
     height: 200px;
     width: 200px;
-    transition: 0.5s ease-in-out;
+    /* transition: 0.5s ease-in-out; */
 }
 
 .profile__img:hover {
     /* background: transparent; */
+    border: 2.5px solid white;
     cursor: pointer;
-    transform: scale(1.05, 1.05);
-  transition: 0.5s ease-in-out;
+    /* transform: scale(1.05, 1.05);
+    transition: 0.5s ease-in-out; */
 }
 
 .profile button {
@@ -88,7 +89,7 @@
     height: 150px;
     width: 150px;
     background: none;
-    margin-bottom: 6.5%;
+    margin-bottom: 6%;
 }
 
 .add__profile__btn:hover {
@@ -98,9 +99,9 @@
 
 .add__profile__icon {
     background-color: rgb(87, 87, 87);
-    border: none;
     height: 150px;
     width: 150px;
+    border-radius: 50%;
 }
 
 .add__profile__icon:hover {

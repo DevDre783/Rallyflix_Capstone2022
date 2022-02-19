@@ -6,7 +6,7 @@ const ADD_PROFILE = "profiles/ADD_PROFILE"
 
 const loadProfiles = profiles => ({
     type: LOAD,
-    profiles
+    profiles  
 })
 
 const addProfile = (profile) => ({
