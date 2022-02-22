@@ -6,7 +6,7 @@ const ADD_PROFILE = "profiles/ADD_PROFILE"
 
 const loadProfiles = profiles => ({
     type: LOAD,
-    profiles  
+    profiles
 })
 
 const addProfile = (profile) => ({
@@ -29,7 +29,7 @@ const addProfile = (profile) => ({
 export const getProfiles = (userId) => async dispatch => {
     // console.log("HEEELLLLOOOOOO", userId)
     const response = await fetch(`/api/profiles/${userId}`);
-
+    
     if (response.ok) {
         const profiles_list = await response.json();
         dispatch(loadProfiles(profiles_list));

@@ -3,7 +3,7 @@ import ProfileButton from './ProfileButton';
 import './Navigation.css';
 import { useState } from "react";
 import * as sessionActions from '../../store/session';
-import { Link, NavLink, useHistory } from 'react-router-dom';
+import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 
@@ -11,6 +11,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 function Navbar({ isLoaded }) {
   const user = useSelector(state => state.session.user)
+  const location = useLocation()
+  const path = location?.pathname
+  const profileID = path.slice(8)
+
+  console.log("LOCATION.....", profileID)
   // const profiles = useSelector(state => state?.profile?.entries);
 
   const dispatch = useDispatch();
@@ -25,16 +30,13 @@ function Navbar({ isLoaded }) {
   return (
     <nav className='navbar'>
       <div className='logo__container'>
-        <Link to={'/'}><h1>Rallyflix</h1></Link>
+        <Link to={`/browse/${profileID}`}><h1>Rallyflix</h1></Link>
       </div>
       <div className=''>
 
       </div>
       {user ? null :
         <div className='right__container'>
-          <div>
-            <a>My Lists</a>
-          </div>
           <div>
             <Link to={"/login"}><button className='signin__btn'>Sign In</button></Link><Link to={'/profiles'}><button onClick={handleClick} className='signin__btn'>Demo</button></Link>
           </div>
@@ -45,7 +47,7 @@ function Navbar({ isLoaded }) {
       }
         {!user ? null :
           <div className='profile__icon'>
-            <Link to={'/my-lists'}>My Lists</Link>
+            <Link to={`/my-lists/${profileID}`}>My Lists</Link>
             <ProfileButton/>
           </div>
        }

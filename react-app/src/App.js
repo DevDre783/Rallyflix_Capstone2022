@@ -6,6 +6,7 @@ import SignUpForm from './components/auth/SignUpForm';
 import Navbar from "./components/Navigation"
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import BrowsePage from './components/BrowsePage';
+import MyListsPage from './components/MyListsPage';
 // import UsersList from './components/UsersList';
 // import User from './components/User';
 import SplashPage from './components/SplashPage';
@@ -42,17 +43,14 @@ function App() {
         <Route path='/sign-up' exact={true}>
           <SignUpForm />
         </Route>
-        {/* <ProtectedRoute path='/users' exact={true} >
-          <UsersList/>
-        </ProtectedRoute>
-        <ProtectedRoute path='/users/:userId' exact={true} >
-          <User />
-        </ProtectedRoute> */}
         <ProtectedRoute path="/profiles" exact={true}>
           <ProfilesPage />
         </ProtectedRoute>
         <ProtectedRoute path="/browse/:profileId" exact={true}>
           <BrowsePage />
+        </ProtectedRoute>
+        <ProtectedRoute path="/my-lists/:id" exact={true}>
+          <MyListsPage />
         </ProtectedRoute>
       </Switch>
     </BrowserRouter>
