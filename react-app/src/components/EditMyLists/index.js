@@ -5,39 +5,46 @@ import { useState, useEffect } from "react";
 // import { useSelector } from 'react-redux';
 // import { Link, NavLink, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { editUserProfile, getProfiles } from "../../store/profile";
+// import { editUserProfile, getProfiles } from "../../store/profile";
 // import { useParams } from 'react-router-dom';
 import { FaEdit } from 'react-icons/fa';
 import { editList, getLists } from '../../store/list';
 import { useParams } from 'react-router-dom';
 
 
-function EditLists() {
+function EditLists({listId}) {
     const [editListTitle, setEditListTitle] = useState("")
     const [showEditForm, setShowEditForm] = useState(false)
-    const lists = useSelector(state => state?.lists)
+    const lists = useSelector(state => state?.my_lists.lists)
+    console.log("FROM EDIT", listId)
     const dispatch = useDispatch()
     const profileId = useParams()
 
+    useEffect(() => {
+        
+    }, [dispatch])
 
     const handleEditListForm = (e) => {
         e.preventDefault()
 
-        setShowEditForm(true)
+        if(!showEditForm) {
+            setShowEditForm(true)
+        } else {
+            setShowEditForm(false)
+        }
     }
 
-    const handleEditList = (e) => {
+
+    const handleEditList = async (e) => {
         e.preventDefault()
-        // let id = lists.id
+        setShowEditForm(false)
         let newTitle = editListTitle
-
-        dispatch(editList(newTitle))
+        // console.log(newTitle)
+        console.log("HANDLE EDIT !!!!!!", typeof(+profileId?.id))
+        await dispatch(editList(newTitle, +profileId?.id, listId))
+        await dispatch(getLists(+profileId?.id))
     }
 
-    useEffect(() => {
-        dispatch(getLists(profileId.id))
-        // ?????
-    }, [dispatch, profileId])
 
 
     return (
