@@ -53,7 +53,7 @@ function MyListsPage() {
         return (
             <div className='page__container'>
                 <div>
-                    <h1>My Lists</h1><button className='add__list__btn' onClick={addListForm}><FaPlusCircle className=''/></button>
+                    <h1>My Lists <button className='add__list__btn' onClick={addListForm}><FaPlusCircle className=''/></button></h1>
                     {showAddForm && (
                         <div className='add__list'>
                             <input
