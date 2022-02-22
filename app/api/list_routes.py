@@ -41,6 +41,7 @@ def add_list(id):
 @login_required
 def edit_list(id):
     data = request.json
+    print("")
     title = data["title"]
     profile_id = data['profile_id']
 

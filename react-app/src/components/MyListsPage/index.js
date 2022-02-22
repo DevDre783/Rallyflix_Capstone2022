@@ -22,6 +22,16 @@ function MyListsPage() {
     const profileId = useParams()
 
     // console.log("FROM MyListsPage", lists)
+    useEffect(() => {
+        (async () => {
+            const lists = await dispatch(getLists(+profileId?.id))
+            console.log("??????", lists)
+            const myLists = Object.values(lists[0])
+            setCurrentList(myLists)
+            await dispatch(getLists(+profileId?.id))
+            setIsLoaded(true)
+        })();
+    }, [dispatch, profileId])
 
     const addListForm = (e) => {
         e.preventDefault()
@@ -49,16 +59,6 @@ function MyListsPage() {
     }
 
 
-    useEffect(() => {
-        (async () => {
-            const lists = await dispatch(getLists(profileId?.id))
-            console.log("??????", lists)
-            setIsLoaded(true)
-            const myLists = Object.values(lists[0])
-            setCurrentList(myLists)
-            await dispatch(getLists(profileId?.id))
-        })();
-    }, [dispatch, profileId])
 
 
     // console.log("CURRENT LIST", currentList)
@@ -85,12 +85,12 @@ function MyListsPage() {
                     {currentList?.map(list => (
                         <div>
                             <h2 className='crap'>{list?.title}
-                            <EditLists className="idkyet"/>
+                            <EditLists listId={list.id} className="idkyet"/>
                             <button className='deleteListBtn' onClick={(e) => { handleDeleteList(e, lists?.id) }}><FaTrash  className='deleteListBtn'/></button>
                             </h2>
                             <VideosToList list={list} />
                         </div>
-                    ))}
+                    )).reverse()}
                 </div>
             </div>
         )

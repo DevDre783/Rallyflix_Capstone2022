@@ -45,12 +45,11 @@ export const addNewList = (title, profileId) => async dispatch => {
 }
 
 export const editList = (title, profile_id, id) => async (dispatch) => {
-    console.log("IN STORE LIST", profile_id, title)
+    console.log("IN STORE LIST", profile_id, id, title)
     const res = await fetch(`/api/my-lists/${id}`, {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-            "id": id,
             "profile_id": profile_id,
             "title": title
         })
