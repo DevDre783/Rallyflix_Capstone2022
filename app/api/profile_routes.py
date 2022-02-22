@@ -63,11 +63,10 @@ def edit_profile(id):
 @profile_routes.route('/<int:id>', methods=["DELETE"])
 @login_required
 def delete_profile(id):
-    print("IN PROFILE API !!!!!!!!!!!!!!!!!!!!!")
     object = request.json
     user_id = object["user_id"]
-    print("USERS ID???????????", user_id)
     currentProfile = Profile.query.get(id)
+    
     db.session.delete(currentProfile)
     db.session.commit()
 

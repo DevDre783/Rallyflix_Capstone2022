@@ -29,7 +29,7 @@ const addProfile = (profile) => ({
 export const getProfiles = (userId) => async dispatch => {
     // console.log("HEEELLLLOOOOOO", userId)
     const response = await fetch(`/api/profiles/${userId}`);
-    
+
     if (response.ok) {
         const profiles_list = await response.json();
         dispatch(loadProfiles(profiles_list));
@@ -99,7 +99,6 @@ const initialState = {
 
 
 const profileReducer = (state = initialState, action) => {
-    let newState;
 
     switch (action.type) {
         case LOAD: {

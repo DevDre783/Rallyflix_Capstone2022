@@ -1,3 +1,4 @@
+from email.policy import default
 from .db import db
 
 
@@ -7,8 +8,8 @@ class List(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(150), nullable=False)
     profile_id = db.Column(db.Integer, db.ForeignKey("profiles.id"), nullable=False)
-    video_id = db.Column(db.Integer, db.ForeignKey("videos.id"), nullable=False)
-    
+    video_id = db.Column(db.Integer, db.ForeignKey("videos.id"))
+
 
     profile_info = db.relationship("Profile", back_populates="list_info")
     video_info = db.relationship("Video", back_populates="list_info")

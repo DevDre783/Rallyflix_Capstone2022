@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, make_response, request
 from flask_login import login_required
+from app.forms.add_lists_form import AddListForm
 from app.models import List, Profile, Video, db
-from app.forms import add_lists_form
 
 
 list_routes = Blueprint('lists', __name__)
@@ -21,58 +21,54 @@ def profile_lists(id):
 @list_routes.route('/<int:id>', methods=['POST'])
 @login_required
 def add_list(id):
+    print("FROM THE LIST API", id)
     data = request.json
-    print("NEW PROFILE BACKEND????", data)
-    form = data
-    form['csrf_token'] = request.cookies['csrf_token']
+    title = data['title']
+    profile_id = data['profile_id']
+    print("API ROUTE !!!!!!", title, profile_id)
 
-    if form.validate_on_submit():
-        list = List(
-            video_id=data['video_id'],
-            title=data['title']
-        )
+    newList = List(title=title, profile_id=profile_id)
 
-        db.session.add(list)
-        db.session.commit()
+    db.session.add(newList)
+    db.session.commit()
+    return jsonify([newList.to_dict()])
 
-        return jsonify(list.to_dict())
-
-    return make_response({'errors': 'Error(s) on creating new list.'})
+    # return make_response({'errors': 'Error(s) on creating new list.'})
 
 
-# # EDIT ROUTE HERE
-# @profile_routes.route('/<int:id>', methods=['PUT'])
-# @login_required
-# def edit_profile(id):
-#     object = request.json
-#     name = object["newName"]
-#     user_id = object["user_id"]
+# EDIT ROUTE HERE
+@list_routes.route('/<int:id>', methods=['PUT'])
+@login_required
+def edit_list(id):
+    data = request.json
+    title = data["title"]
+    profile_id = data['profile_id']
 
-#     print("USERS ID???????????", name, user_id)
+    # print("USERS ID???????????", title, profile_id)
 
-#     currentProfile = Profile.query.get(id)
-#     currentProfile.name = name
+    currentList = List.query.get(id)
+    currentList.title = title
 
-#     db.session.add(currentProfile)
-#     db.session.commit()
+    db.session.add(currentList)
+    db.session.commit()
 
-#     userProfiles = Profile.query.filter(Profile.user_id == user_id).all()
+    profileLists = List.query.filter(List.profile_id == profile_id).all()
 
-#     return jsonify([profile.to_dict() for profile in userProfiles])
+    return jsonify([list.to_dict() for list in profileLists])
 
 
 
-# @profile_routes.route('/<int:id>', methods=["DELETE"])
-# @login_required
-# def delete_profile(id):
-#     print("IN PROFILE API !!!!!!!!!!!!!!!!!!!!!")
-#     object = request.json
-#     user_id = object["user_id"]
-#     print("USERS ID???????????", user_id)
-#     currentProfile = Profile.query.get(id)
-#     db.session.delete(currentProfile)
-#     db.session.commit()
+@list_routes.route('/<int:id>', methods=["DELETE"])
+@login_required
+def delete_list(id):
+    # print("IN PROFILE API !!!!!!!!!!!!!!!!!!!!!")
+    object = request.json
+    profile_id = object["profile_id"]
+    print("Profiles ID???????????", profile_id)
+    currentList = List.query.get(id)
+    db.session.delete(currentList)
+    db.session.commit()
 
-#     userProfiles = Profile.query.filter(Profile.user_id == user_id).all()
+    profileLists = List.query.filter(List.profile_id == profile_id).all()
 
-#     return jsonify([profile.to_dict() for profile in userProfiles])
+    return jsonify([list.to_dict() for list in profileLists])
