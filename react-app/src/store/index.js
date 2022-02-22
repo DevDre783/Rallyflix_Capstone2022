@@ -3,12 +3,14 @@ import thunk from 'redux-thunk';
 import session from './session'
 import profile from './profile';
 import videos from './browse'
-import profileReducer from './profile';
+import my_lists from './list'
+// import profileReducer from './profile';
 
 const rootReducer = combineReducers({
   session,
   profile,
-  videos
+  videos,
+  my_lists
 });
 
 

@@ -18,6 +18,7 @@
     color: white;
     padding-top: 10%;
     padding-left: 10%;
+    margin-bottom: 3%;
 }
 
 .videos__container {
@@ -35,4 +36,11 @@
 .individual__video {
     /* padding-top: 2.5%; */
     margin-bottom: 25%;
+    transition-duration: 0.3s;
+    border: rgb(66, 66, 66) solid 1px;
+}
+
+.individual__video:hover {
+    transform: scale(1.9);
+    transition-duration: 0.3s
 }
