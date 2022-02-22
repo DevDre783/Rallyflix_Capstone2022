@@ -4,7 +4,7 @@ import session from './session'
 import profile from './profile';
 import videos from './browse'
 import my_lists from './list'
-// import profileReducer from './profile';
+
 
 const rootReducer = combineReducers({
   session,

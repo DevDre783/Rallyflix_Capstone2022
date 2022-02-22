@@ -21,7 +21,7 @@ function VideosToList({list}) {
 
     return (
         <>
-            <iframe className="individual__video" width="300" height="175" src={myVideo?.url} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen"></iframe>
+            <iframe className="" width="300" height="175" src={myVideo?.url} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen="allowFullScreen"></iframe>
         </>
     )
 }

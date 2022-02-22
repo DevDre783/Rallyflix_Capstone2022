@@ -2,23 +2,26 @@ import React from 'react';
 import './MyListPage.css';
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { getLists, addNewList } from '../../store/list';
+import { getLists, addNewList, editList, deleteProfileLists } from '../../store/list';
 import { getVideos } from '../../store/browse';
 import { useParams } from 'react-router-dom';
 import VideosToList from '../VideoForList';
-import { FaPlusCircle } from 'react-icons/fa';
+import { FaEdit, FaPlusCircle, FaTrash } from 'react-icons/fa';
+import EditLists from '../EditMyLists';
 
 
 function MyListsPage() {
     const dispatch = useDispatch()
-    const lists = useSelector(state => state?.lists?.list)
+    const [editListTitle, setEditListTitle] = useState("")
+    const [showEditForm, setShowEditForm] = useState(false)
+    const lists = useSelector(state => state?.lists)
     const [newList, setNewList] = useState("")
     const [currentList, setCurrentList] = useState([])
     const [showAddForm, setShowAddForm] = useState(false)
     const [isLoaded, setIsLoaded] = useState(false)
     const profileId = useParams()
-    const listId = lists?.list?.id
-    console.log("FROM MyListsPage", listId)
+
+    // console.log("FROM MyListsPage", lists)
 
     const addListForm = (e) => {
         e.preventDefault()
@@ -29,23 +32,36 @@ function MyListsPage() {
     const handleAddList = (e) => {
         e.preventDefault()
 
-        dispatch(addNewList(listId, newList))
-        dispatch(getLists(profileId.id))
+        dispatch(getLists(profileId?.id))
+        const newListAdd = dispatch(addNewList(newList, profileId?.id))
 
-        setShowAddForm(false)
+        if (newListAdd) {
+            dispatch(getLists(profileId?.id))
+            setShowAddForm(false)
+        }
     }
 
-    useEffect(async () => {
-
-        const lists = await dispatch(getLists(profileId.id))
-        setIsLoaded(true)
-        const myLists = Object.values(lists[0])
-        setCurrentList(myLists)
-
-    }, [profileId])
+    const handleDeleteList = (e, id) => {
+        e.preventDefault()
+        let list_id = lists.id
+        console.log("IN PROFILE COMPONENT", id, list_id)
+        dispatch(deleteProfileLists(id, list_id))
+    }
 
 
-    console.log("CURRENT LIST", currentList)
+    useEffect(() => {
+        (async () => {
+            const lists = await dispatch(getLists(profileId?.id))
+            console.log("??????", lists)
+            setIsLoaded(true)
+            const myLists = Object.values(lists[0])
+            setCurrentList(myLists)
+            await dispatch(getLists(profileId?.id))
+        })();
+    }, [dispatch, profileId])
+
+
+    // console.log("CURRENT LIST", currentList)
 
 
     if (isLoaded) {
@@ -53,14 +69,14 @@ function MyListsPage() {
         return (
             <div className='page__container'>
                 <div>
-                    <h1>My Lists</h1><button className='add__list__btn' onClick={addListForm}><FaPlusCircle className=''/></button>
+                    <h1>My Lists <button className='add__list__btn' onClick={addListForm}><FaPlusCircle className='' /></button></h1>
                     {showAddForm && (
                         <div className='add__list'>
                             <input
                                 type="text"
                                 name="add-profile"
                                 value={newList}
-                                onChange={(e) => setNewList(e.target.value)}
+                                onChange={(e) => setNewList(e?.target?.value)}
                                 placeholder="New List"
                             />
                             <button type="submit" onClick={handleAddList}>Add</button>
@@ -68,7 +84,10 @@ function MyListsPage() {
                     )}
                     {currentList?.map(list => (
                         <div>
-                            <h2 className='crap'>{list?.title}</h2>
+                            <h2 className='crap'>{list?.title}
+                            <EditLists className="idkyet"/>
+                            <button className='deleteListBtn' onClick={(e) => { handleDeleteList(e, lists?.id) }}><FaTrash  className='deleteListBtn'/></button>
+                            </h2>
                             <VideosToList list={list} />
                         </div>
                     ))}

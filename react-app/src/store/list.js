@@ -25,14 +25,14 @@ export const getLists = (id) => async dispatch => {
     }
 }
 
-export const addNewList = (id, title) => async dispatch => {
-    console.log("WORKING???????", id, title )
+export const addNewList = (title, profileId) => async dispatch => {
+    console.log("IN addNewList THUNK", profileId, title)
 
-    const response = await fetch(`/api/my-lists/${id}`, {
+    const response = await fetch(`/api/my-lists/${profileId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            "id": id,
+            "profile_id": profileId,
             "title": title
         })
     })
@@ -40,6 +40,45 @@ export const addNewList = (id, title) => async dispatch => {
     if (response.ok) {
         const new_list = await response.json();
         dispatch(addList(new_list))
+        return new_list
+    }
+}
+
+export const editList = (title, profile_id, id) => async (dispatch) => {
+    console.log("IN STORE LIST", profile_id, title)
+    const res = await fetch(`/api/my-lists/${id}`, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            "id": id,
+            "profile_id": profile_id,
+            "title": title
+        })
+    })
+
+    if(res.ok) {
+        const edited_list = await res.json()
+        // dispatch(deleteProfile(id));
+        console.log("THE PROFILES LIST", edited_list)
+        dispatch(getLists(edited_list));
+    }
+}
+
+export const deleteProfileLists = (id, profile_id) => async (dispatch) => {
+    console.log("IN STORE PROFILE 1", id, profile_id)
+    const res = await fetch(`/api/my-lists/${id}`, {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            profile_id
+        })
+    })
+
+    if(res.ok) {
+        const profiles_list = await res.json()
+        // dispatch(deleteProfile(id));
+        console.log("THE PROFILES LIST", profiles_list)
+        dispatch(getLists(profiles_list));
     }
 }
 
