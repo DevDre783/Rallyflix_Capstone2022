@@ -57,13 +57,12 @@ export const addNewList = (title, profileId) => async dispatch => {
     }
 }
 
-export const editList = (title, profile_id, id) => async (dispatch) => {
-    console.log("IN STORE LIST", profile_id, id, title)
+export const editList = (title, id) => async (dispatch) => {
+    console.log("IN STORE LIST", id, title)
     const res = await fetch(`/api/my-lists/${id}`, {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-            "profile_id": profile_id,
             "title": title
         })
     })
@@ -73,12 +72,12 @@ export const editList = (title, profile_id, id) => async (dispatch) => {
         // dispatch(deleteProfile(id));
         console.log("THE PROFILES LIST", edited_list)
         dispatch(editAList(edited_list))
-        dispatch(getLists(edited_list));
     }
 }
 
+
 export const deleteProfileLists = (id) => async (dispatch) => {
-    console.log("IN STORE PROFILE 1", id)
+    console.log("IN STORE LIST DELETE", +id)
     const res = await fetch(`/api/my-lists/${id}`, {
         method: 'DELETE',
         headers: {'Content-Type': 'application/json'}

@@ -27,7 +27,7 @@ function BrowsePage() {
             </div>
             <div className='videos__container'>
                 {videos.map(video => (
-                    <div>
+                    <div key={video.id}>
                         <iframe className="individual__video" width="450" height="275" src={video?.url} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen="allowfullscreen"></iframe>
                     </div>
                 ))}

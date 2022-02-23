@@ -52,20 +52,18 @@ function MyListsPage() {
         dispatch(getLists(+profileId?.id))
         const newListAdd = dispatch(addNewList(newList, +profileId?.id))
 
-        // if (newListAdd) {
-            dispatch(getLists(+profileId?.id))
-            setShowAddForm(false)
-        // }
+        dispatch(getLists(+profileId?.id))
+        setShowAddForm(false)
     }
 
-    const handleDeleteList = (e, id) => {
-        e.preventDefault()
-        // console.log("FROM DELETE", e.target.id)
-        // let list_id = e.target.id
-        console.log("IN PROFILE COMPONENT", e.target.id)
-        dispatch(deleteProfileLists(e.target.id))
-        dispatch(getLists(+profileId.id))
-    }
+    // const handleDeleteList = (e, id) => {
+    //     e.preventDefault()
+    //     // console.log("FROM DELETE", e.target.id)
+    //     // let list_id = e.target.id
+    //     console.log("IN PROFILE COMPONENT", id)
+    //     dispatch(deleteProfileLists(id)).then(() => dispatch(getLists(+profileId.id)))
+
+    // }
 
     // console.log("CURRENT LIST", currentList)
 
@@ -92,7 +90,7 @@ function MyListsPage() {
                         <div>
                             <h2 className='crap'>{list?.title}
                             <EditLists listId={list.id} list={list} className="idkyet"/>
-                            <button id={list.id} className='deleteListBtn' onClick={handleDeleteList}><FaTrash  className='deleteListBtn'/></button>
+                            {/* <button id={list.id} className='deleteListBtn' onClick={handleDeleteList}><FaTrash  className='deleteListBtn'/></button> */}
                             </h2>
                             <VideosToList list={list} />
                         </div>

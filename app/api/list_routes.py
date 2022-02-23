@@ -43,7 +43,7 @@ def edit_list(id):
     object = request.json
     print("")
     title = object["title"]
-    profile_id = object['profile_id']
+    # profile_id = object['profile_id']
 
     # print("USERS ID???????????", title, profile_id)
 
@@ -54,7 +54,7 @@ def edit_list(id):
     # db.session.add(currentList)
     db.session.commit()
 
-    profileLists = List.query.filter(List.profile_id == profile_id).all()
+    profileLists = List.query.filter(List.profile_id == id).all()
 
     return jsonify([list.to_dict() for list in profileLists])
 
