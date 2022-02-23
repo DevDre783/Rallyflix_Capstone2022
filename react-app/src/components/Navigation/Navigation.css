@@ -24,7 +24,8 @@ body {
 }
 
 .profile__icon {
-    margin-right: 1%;
+    margin-right: 26%;
+    margin-left: 65%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -132,6 +133,7 @@ body {
     border-radius: 50%;
     border: none;
     height: 42px;
+    margin-left: 10%;
 }
 
 .profile-menu:hover {
@@ -284,4 +286,14 @@ body {
 
 .signin__btn:hover {
     background-color: rgb(255, 0, 0);
+}
+
+.my__lists__tab {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.my__lists__tab a {
+    font-size: 12pt;
 }

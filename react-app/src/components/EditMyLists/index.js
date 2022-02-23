@@ -12,8 +12,8 @@ import { editList, getLists } from '../../store/list';
 import { useParams } from 'react-router-dom';
 
 
-function EditLists({listId}) {
-    const [editListTitle, setEditListTitle] = useState("")
+function EditLists({listId, list}) {
+    const [editListTitle, setEditListTitle] = useState(list.title)
     const [showEditForm, setShowEditForm] = useState(false)
     const lists = useSelector(state => state?.my_lists.lists)
     console.log("FROM EDIT", listId)
@@ -21,7 +21,7 @@ function EditLists({listId}) {
     const profileId = useParams()
 
     useEffect(() => {
-        
+
     }, [dispatch])
 
     const handleEditListForm = (e) => {
