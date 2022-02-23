@@ -63,13 +63,12 @@ def edit_list(id):
 @login_required
 def delete_list(id):
     # print("IN PROFILE API !!!!!!!!!!!!!!!!!!!!!")
-    object = request.json
-    profile_id = object["profile_id"]
-    print("Profiles ID???????????", profile_id)
+
     currentList = List.query.get(id)
+    print("FROM DELETE ROUTE LIST", currentList)
     db.session.delete(currentList)
     db.session.commit()
 
-    profileLists = List.query.filter(List.profile_id == profile_id).all()
+    profileLists = List.query.filter(List.profile_id == Profile.id).all()
 
     return jsonify([list.to_dict() for list in profileLists])
