@@ -7,8 +7,8 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 // import { editUserProfile, getProfiles } from "../../store/profile";
 // import { useParams } from 'react-router-dom';
-import { FaEdit } from 'react-icons/fa';
-import { editList, getLists } from '../../store/list';
+import { FaEdit, FaTrash } from 'react-icons/fa';
+import { editList, getLists, deleteProfileLists } from '../../store/list';
 import { useParams } from 'react-router-dom';
 
 
@@ -35,14 +35,21 @@ function EditLists({listId, list}) {
     }
 
 
-    const handleEditList = async (e) => {
+    const handleEditList = (e) => {
         e.preventDefault()
         setShowEditForm(false)
         let newTitle = editListTitle
         // console.log(newTitle)
-        console.log("HANDLE EDIT !!!!!!", typeof(+profileId?.id))
-        await dispatch(editList(newTitle, +profileId?.id, listId))
-        await dispatch(getLists(+profileId?.id))
+        console.log("HANDLE EDIT !!!!!!", +profileId.id)
+        dispatch(editList(newTitle, list.id)).then(() => dispatch(getLists(+profileId.id)))
+    }
+
+    const handleDeleteList = () => {
+        // e.preventDefault()
+        // console.log("FROM DELETE", e.target.id)
+        // let list_id = e.target.id
+        console.log("IN PROFILE COMPONENT", list.id)
+        dispatch(deleteProfileLists(list.id)).then(() => dispatch(getLists(+profileId.id)))
     }
 
 
@@ -50,6 +57,7 @@ function EditLists({listId, list}) {
     return (
         <>
             <button onClick={handleEditListForm}><FaEdit className='editProfileBtn' /></button>
+            <button id={list.id} className='deleteListBtn' onClick={handleDeleteList}><FaTrash  className='deleteListBtn'/></button>
             {showEditForm && (
                 <div className='edit__list'>
                         <div className='edit__list'>
