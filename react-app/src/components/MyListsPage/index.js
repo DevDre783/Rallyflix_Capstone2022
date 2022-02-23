@@ -84,7 +84,7 @@ function MyListsPage() {
                     {currentList?.map(list => (
                         <div>
                             <h2 className='crap'>{list?.title}
-                            <EditLists listId={list.id} className="idkyet"/>
+                            <EditLists listId={list.id} list={list} className="idkyet"/>
                             <button id={list.id} className='deleteListBtn' onClick={handleDeleteList}><FaTrash  className='deleteListBtn'/></button>
                             </h2>
                             <VideosToList list={list} />

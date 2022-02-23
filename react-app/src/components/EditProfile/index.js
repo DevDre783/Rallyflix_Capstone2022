@@ -11,7 +11,7 @@ import { FaEdit } from 'react-icons/fa';
 
 
 function EditProfile({profile}) {
-    const [editProfileName, setEditProfileName] = useState("")
+    const [editProfileName, setEditProfileName] = useState(profile.name)
     const [showEditForm, setShowEditForm] = useState(false)
     // const profiles = useSelector(state => state?.profile?.entries);
     const user = useSelector(state => state?.session?.user);

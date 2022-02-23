@@ -14,6 +14,7 @@ function Navbar({ isLoaded }) {
   const location = useLocation()
   const path = location?.pathname
   const profileID = path.slice(8)
+  const homeRoute = path.slice(10)
 
   console.log("LOCATION.....", profileID)
   // const profiles = useSelector(state => state?.profile?.entries);
@@ -29,26 +30,46 @@ function Navbar({ isLoaded }) {
 
   return (
     <nav className='navbar'>
-      <div className='logo__container'>
-        <Link to={`/browse/${profileID}`}><h1>Rallyflix</h1></Link>
-      </div>
-      <div className=''>
-
-      </div>
       {user ? null :
-        <div className='right__container'>
-          <div>
-            <Link to={"/login"}><button className='signin__btn'>Sign In</button></Link><Link to={'/profiles'}><button onClick={handleClick} className='signin__btn'>Demo</button></Link>
-          </div>
-          <div className='right-nav'>
-            <div className='profile-icon'>{isLoaded}</div>
-          </div>
+      <>
+        <div className='logo__container'>
+          <Link to={`/`}><h1>Rallyflix</h1></Link>
         </div>
+        <div className=''>
+
+        </div>
+        <div className='right__container'>
+            <div>
+              <Link to={"/login"}><button className='signin__btn'>Sign In</button></Link><Link to={'/profiles'}><button onClick={handleClick} className='signin__btn'>Demo</button></Link>
+            </div>
+            <div className='right-nav'>
+              <div className='profile-icon'>{isLoaded}</div>
+            </div>
+          </div>
+      </>
+      }
+      {!user ? null :
+        <>
+          <div className='logo__container'>
+            <Link to={`/browse/${homeRoute}`}><h1>Rallyflix</h1></Link>
+          </div>
+          <div className=''>
+            <div>
+
+            </div>
+            <div className=''>
+
+            </div>
+            <div>
+
+            </div>
+          </div>
+        </>
       }
         {!user ? null :
           <div className='profile__icon'>
-            <Link to={`/my-lists/${profileID}`}>My Lists</Link>
-            <ProfileButton/>
+            <div className='my__lists__tab'><NavLink to={`/my-lists/${profileID}`}>My Lists</NavLink></div>
+            <ProfileButton />
           </div>
        }
     </nav>

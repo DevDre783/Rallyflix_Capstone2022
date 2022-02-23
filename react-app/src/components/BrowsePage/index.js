@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { getVideos } from '../../store/browse';
 import { useParams } from 'react-router-dom';
+import { FaAccusoft } from 'react-icons/fa';
 
 
 function BrowsePage() {
@@ -27,7 +28,7 @@ function BrowsePage() {
             <div className='videos__container'>
                 {videos.map(video => (
                     <div>
-                        <iframe className="individual__video" width="450" height="275" src={video?.url} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen"></iframe>
+                        <iframe className="individual__video" width="450" height="275" src={video?.url} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen="allowfullscreen"></iframe>
                     </div>
                 ))}
             </div>
