@@ -69,6 +69,6 @@ def delete_list(id):
     db.session.delete(currentList)
     db.session.commit()
 
-    profileLists = List.query.filter(List.profile_id == Profile.id).all()
+    profileLists = List.query.filter(List.profile_id == Profile.id)
 
     return jsonify([list.to_dict() for list in profileLists])

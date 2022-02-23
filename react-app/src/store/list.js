@@ -40,11 +40,11 @@ export const getLists = (id) => async dispatch => {
 export const addNewList = (title, profileId) => async dispatch => {
     console.log("IN addNewList THUNK", profileId, title)
 
-    const response = await fetch(`/api/my-lists/${profileId}`, {
+    const response = await fetch(`/api/my-lists/${+profileId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            "profile_id": profileId,
+            "profile_id": +profileId,
             "title": title
         })
     })
@@ -77,18 +77,17 @@ export const editList = (title, profile_id, id) => async (dispatch) => {
 }
 
 export const deleteProfileLists = (id) => async (dispatch) => {
-    console.log("IN STORE PROFILE 1", id)
+    console.log("IN STORE PROFILE 1", typeof(id))
     const res = await fetch(`/api/my-lists/${id}`, {
         method: 'DELETE'
-
     })
 
     if(res.ok) {
         const profiles_list = await res.json()
         // dispatch(deleteProfile(id));
-        console.log("THE PROFILES LIST", profiles_list)
+        // console.log("THE PROFILES LIST", profiles_list)
         dispatch(deleteList(profiles_list))
-        // dispatch(getLists(profiles_list));
+        dispatch(getLists(profiles_list));
     }
 }
 
