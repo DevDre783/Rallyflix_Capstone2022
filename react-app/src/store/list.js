@@ -27,6 +27,7 @@ const editAList = (list) => ({
 })
 
 export const getLists = (id) => async dispatch => {
+    console.log("FROM GET LISTS", id)
     const response = await fetch(`/api/my-lists/${id}`);
 
     if (response.ok) {
@@ -72,22 +73,23 @@ export const editList = (title, profile_id, id) => async (dispatch) => {
         // dispatch(deleteProfile(id));
         console.log("THE PROFILES LIST", edited_list)
         dispatch(editAList(edited_list))
-        // dispatch(getLists(edited_list));
+        dispatch(getLists(edited_list));
     }
 }
 
 export const deleteProfileLists = (id) => async (dispatch) => {
-    console.log("IN STORE PROFILE 1", typeof(id))
+    console.log("IN STORE PROFILE 1", id)
     const res = await fetch(`/api/my-lists/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'}
     })
 
     if(res.ok) {
         const profiles_list = await res.json()
         // dispatch(deleteProfile(id));
-        // console.log("THE PROFILES LIST", profiles_list)
+        console.log("THE PROFILES LIST", profiles_list)
         dispatch(deleteList(profiles_list))
-        dispatch(getLists(profiles_list));
+        // dispatch(getLists(profiles_list));
     }
 }
 
