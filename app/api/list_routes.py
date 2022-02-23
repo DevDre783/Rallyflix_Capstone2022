@@ -40,17 +40,18 @@ def add_list(id):
 @list_routes.route('/<int:id>', methods=['PUT'])
 @login_required
 def edit_list(id):
-    data = request.json
+    object = request.json
     print("")
-    title = data["title"]
-    profile_id = data['profile_id']
+    title = object["title"]
+    profile_id = object['profile_id']
 
     # print("USERS ID???????????", title, profile_id)
 
     currentList = List.query.get(id)
+    print("FROM EDIT LIST API", currentList)
     currentList.title = title
 
-    db.session.add(currentList)
+    # db.session.add(currentList)
     db.session.commit()
 
     profileLists = List.query.filter(List.profile_id == profile_id).all()
@@ -62,7 +63,7 @@ def edit_list(id):
 @list_routes.route('/<int:id>', methods=["DELETE"])
 @login_required
 def delete_list(id):
-    # print("IN PROFILE API !!!!!!!!!!!!!!!!!!!!!")
+    print("IN LIST DELETE API !!!!!!!!", id)
 
     currentList = List.query.get(id)
     print("FROM DELETE ROUTE LIST", currentList)

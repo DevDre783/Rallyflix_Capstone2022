@@ -20,18 +20,25 @@ function MyListsPage() {
     const [showAddForm, setShowAddForm] = useState(false)
     const [isLoaded, setIsLoaded] = useState(false)
     const profileId = useParams()
+    console.log("FROM MYLISTPAGE", lists[0])
 
     // console.log("FROM MyListsPage", lists)
+    // useEffect(() => {
+    //     (async () => {
+    //         const lists = await dispatch(getLists(+profileId?.id))
+    //         console.log("??????", lists)
+    //         const myLists = Object.values(lists[0])
+    //         setCurrentList(myLists)
+    //         await dispatch(getLists(+profileId?.id))
+    //
+    //     })();
+    // }, [dispatch, +profileId])
+
     useEffect(() => {
-        (async () => {
-            const lists = await dispatch(getLists(+profileId?.id))
-            console.log("??????", lists)
-            const myLists = Object.values(lists[0])
-            setCurrentList(myLists)
-            await dispatch(getLists(+profileId?.id))
-            setIsLoaded(true)
-        })();
-    }, [dispatch, +profileId])
+        dispatch(getLists(+profileId.id))
+        // setIsLoaded(true)
+        // dispatch(deleteProfileLists())
+    },[dispatch, +profileId])
 
     const addListForm = (e) => {
         e.preventDefault()
@@ -43,27 +50,27 @@ function MyListsPage() {
         e.preventDefault()
 
         dispatch(getLists(+profileId?.id))
-        const newListAdd = dispatch(addNewList(newList, profileId?.id))
+        const newListAdd = dispatch(addNewList(newList, +profileId?.id))
 
-        if (newListAdd) {
+        // if (newListAdd) {
             dispatch(getLists(+profileId?.id))
             setShowAddForm(false)
-        }
+        // }
     }
 
     const handleDeleteList = (e, id) => {
         e.preventDefault()
         // console.log("FROM DELETE", e.target.id)
-        let list_id = e.target.id
-        // console.log("IN PROFILE COMPONENT", +list_id)
-        dispatch(deleteProfileLists(+list_id))
+        // let list_id = e.target.id
+        console.log("IN PROFILE COMPONENT", e.target.id)
+        dispatch(deleteProfileLists(e.target.id))
         dispatch(getLists(+profileId.id))
     }
 
     // console.log("CURRENT LIST", currentList)
 
 
-    if (isLoaded) {
+    // if (isLoaded) {
 
         return (
             <div className='page__container'>
@@ -81,7 +88,7 @@ function MyListsPage() {
                             <button type="submit" onClick={handleAddList}>Add</button>
                         </div>
                     )}
-                    {currentList?.map(list => (
+                    {lists[0]?.map(list => (
                         <div>
                             <h2 className='crap'>{list?.title}
                             <EditLists listId={list.id} list={list} className="idkyet"/>
@@ -93,7 +100,7 @@ function MyListsPage() {
                 </div>
             </div>
         )
-    } else return <></>
+    // } else return <></>
 
 }
 

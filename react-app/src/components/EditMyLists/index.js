@@ -16,7 +16,7 @@ function EditLists({listId, list}) {
     const [editListTitle, setEditListTitle] = useState(list.title)
     const [showEditForm, setShowEditForm] = useState(false)
     const lists = useSelector(state => state?.my_lists.lists)
-    console.log("FROM EDIT", listId)
+    // console.log("FROM EDIT", listId)
     const dispatch = useDispatch()
     const profileId = useParams()
 
