@@ -14,7 +14,7 @@ function MyListsPage() {
     const dispatch = useDispatch()
     const [editListTitle, setEditListTitle] = useState("")
     const [showEditForm, setShowEditForm] = useState(false)
-    const lists = useSelector(state => state?.lists)
+    const lists = useSelector(state => state?.my_lists.lists)
     const [newList, setNewList] = useState("")
     const [currentList, setCurrentList] = useState([])
     const [showAddForm, setShowAddForm] = useState(false)
@@ -31,7 +31,7 @@ function MyListsPage() {
             await dispatch(getLists(+profileId?.id))
             setIsLoaded(true)
         })();
-    }, [dispatch, profileId])
+    }, [dispatch, +profileId])
 
     const addListForm = (e) => {
         e.preventDefault()
@@ -42,24 +42,23 @@ function MyListsPage() {
     const handleAddList = (e) => {
         e.preventDefault()
 
-        dispatch(getLists(profileId?.id))
+        dispatch(getLists(+profileId?.id))
         const newListAdd = dispatch(addNewList(newList, profileId?.id))
 
         if (newListAdd) {
-            dispatch(getLists(profileId?.id))
+            dispatch(getLists(+profileId?.id))
             setShowAddForm(false)
         }
     }
 
     const handleDeleteList = (e, id) => {
         e.preventDefault()
-        let list_id = lists.id
-        console.log("IN PROFILE COMPONENT", id, list_id)
-        dispatch(deleteProfileLists(id, list_id))
+        // console.log("FROM DELETE", e.target.id)
+        let list_id = e.target.id
+        // console.log("IN PROFILE COMPONENT", +list_id)
+        dispatch(deleteProfileLists(+list_id))
+        dispatch(getLists(+profileId.id))
     }
-
-
-
 
     // console.log("CURRENT LIST", currentList)
 
@@ -86,7 +85,7 @@ function MyListsPage() {
                         <div>
                             <h2 className='crap'>{list?.title}
                             <EditLists listId={list.id} className="idkyet"/>
-                            <button className='deleteListBtn' onClick={(e) => { handleDeleteList(e, lists?.id) }}><FaTrash  className='deleteListBtn'/></button>
+                            <button id={list.id} className='deleteListBtn' onClick={handleDeleteList}><FaTrash  className='deleteListBtn'/></button>
                             </h2>
                             <VideosToList list={list} />
                         </div>

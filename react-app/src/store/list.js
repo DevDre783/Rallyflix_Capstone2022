@@ -1,7 +1,7 @@
 const LOAD = "lists/LOAD";
 const ADD_LIST = "lists/ADD_LIST"
-// const EDIT_LIST = "lists/EDIT_LIST"
-// const DELETE_LIST = "lists/DELETE_LIST"
+const EDIT_LIST = "lists/EDIT_LIST"
+const DELETE_LIST = "lists/DELETE_LIST"
 
 
 const loadLists = my_lists => ({
@@ -11,6 +11,18 @@ const loadLists = my_lists => ({
 
 const addList = list => ({
     type: ADD_LIST,
+    list
+})
+
+const deleteList = (list) => {
+    return {
+        type: DELETE_LIST,
+        list
+    }
+}
+
+const editAList = (list) => ({
+    type: EDIT_LIST,
     list
 })
 
@@ -59,25 +71,24 @@ export const editList = (title, profile_id, id) => async (dispatch) => {
         const edited_list = await res.json()
         // dispatch(deleteProfile(id));
         console.log("THE PROFILES LIST", edited_list)
-        dispatch(getLists(edited_list));
+        dispatch(editAList(edited_list))
+        // dispatch(getLists(edited_list));
     }
 }
 
-export const deleteProfileLists = (id, profile_id) => async (dispatch) => {
-    console.log("IN STORE PROFILE 1", id, profile_id)
+export const deleteProfileLists = (id) => async (dispatch) => {
+    console.log("IN STORE PROFILE 1", id)
     const res = await fetch(`/api/my-lists/${id}`, {
-        method: 'DELETE',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            profile_id
-        })
+        method: 'DELETE'
+
     })
 
     if(res.ok) {
         const profiles_list = await res.json()
         // dispatch(deleteProfile(id));
         console.log("THE PROFILES LIST", profiles_list)
-        dispatch(getLists(profiles_list));
+        dispatch(deleteList(profiles_list))
+        // dispatch(getLists(profiles_list));
     }
 }
 
@@ -86,6 +97,8 @@ const initialState = {
 };
 
 const listsReducer = (state = initialState, action) => {
+    let newState;
+
     switch (action.type) {
         case LOAD: {
             return {
@@ -99,6 +112,19 @@ const listsReducer = (state = initialState, action) => {
                 ...state,
                 lists: [...state.lists, action.list]
             }
+        }
+
+        case EDIT_LIST: {
+            return {
+                ...state,
+                [action.payload]: action.list
+            }
+        }
+
+        case DELETE_LIST: {
+            newState = { ...state };
+            delete newState[action.list]
+            return newState;
         }
 
         default: return state;
