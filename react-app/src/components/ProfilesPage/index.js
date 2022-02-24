@@ -11,8 +11,9 @@ import { FaPlusCircle, FaTrash } from 'react-icons/fa';
 import EditProfile from '../EditProfile';
 
 
-function ProfilesPage({getProfileId}) {
+function ProfilesPage({ getProfileId }) {
     const [newProfile, setNewProfile] = useState("")
+    const [errors, setErrors] = useState([]);
     const [showAddForm, setShowAddForm] = useState(false)
     const profiles = useSelector(state => state?.profile?.entries);
     const user = useSelector(state => state?.session?.user);
@@ -33,17 +34,26 @@ function ProfilesPage({getProfileId}) {
         setShowAddForm(true)
     }
 
-    const handleAddProfile = (e) => {
+    const handleAddProfile = async (e) => {
         e.preventDefault()
 
-        if (profiles.length >= 4) {
-            return "CANNOT ADD MORE THAN 4 PROFILES"
+        const profile_errors = [];
+
+        if (newProfile.length > 20) profile_errors.push("Profile name must not be longer than 20 characters.");
+        if (profiles.length >= 4) profile_errors.push("Cannot add more than four profiles.")
+        if(newProfile.length <= 0) profile_errors.push("Please provide a valid profile name.")
+
+        if (profile_errors.length > 0) {
+            setErrors(profile_errors);
+        } else {
+            await dispatch(addNewProfile(userId, newProfile))
+                .catch(async (res) => {
+                    const data = await res.json();
+                    if (data && data.errors) setErrors(data.errors)
+                });
+            // dispatch(getProfiles(userId))
+            setShowAddForm(false)
         }
-
-        dispatch(addNewProfile(userId, newProfile))
-        dispatch(getProfiles(userId))
-
-        setShowAddForm(false)
     }
 
     const handleDeleteProfile = (e, id) => {
@@ -69,8 +79,8 @@ function ProfilesPage({getProfileId}) {
                             <button id="WOOO" value={profile.id} onClick={handleProfileSelect}></button>
                             <h1 className='placeholder'>{profile?.name}</h1>
                             <div className="edit__component">
-                                <EditProfile profile={profile} className="something"/>
-                                <button className='profile-buttons' onClick={(e) => { handleDeleteProfile(e, profile?.id) }}><FaTrash  className='deleteProfileBtn'/></button>
+                                <EditProfile profile={profile} className="something" />
+                                <button className='profile-buttons' onClick={(e) => { handleDeleteProfile(e, profile?.id) }}><FaTrash className='deleteProfileBtn' /></button>
                             </div>
                         </div>
                     ))}
@@ -79,16 +89,23 @@ function ProfilesPage({getProfileId}) {
                     }
                 </div>
                 {showAddForm && (
-                    <div className='add__profile'>
-                        <input
-                            type="text"
-                            name="add-profile"
-                            value={newProfile}
-                            onChange={(e) => setNewProfile(e.target.value)}
-                            placeholder="Add Profile"
-                        />
-                        <button className='submit-add-profile' type="submit" onClick={handleAddProfile}>Add</button>
-                    </div>
+                    <>
+                        <div className='add__profile'>
+                            <input
+                                type="text"
+                                name="add-profile"
+                                value={newProfile}
+                                onChange={(e) => setNewProfile(e.target.value)}
+                                placeholder="Add Profile"
+                            />
+                            <button className='submit-add-profile' type="submit" onClick={handleAddProfile}>Add</button>
+                        </div>
+                        <div className='profile__errors'>
+                            {errors.map((error) => (
+                                <li style={{ color: "white" }} key={error}>{error}</li>
+                            ))}
+                        </div>
+                    </>
                 )}
             </div>
         </>

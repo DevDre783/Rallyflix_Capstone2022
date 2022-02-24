@@ -12,6 +12,7 @@ import { FaEdit } from 'react-icons/fa';
 
 function EditProfile({profile}) {
     const [editProfileName, setEditProfileName] = useState(profile.name)
+    const [errors, setErrors] = useState([]);
     const [showEditForm, setShowEditForm] = useState(false)
     // const profiles = useSelector(state => state?.profile?.entries);
     const user = useSelector(state => state?.session?.user);
@@ -25,14 +26,26 @@ function EditProfile({profile}) {
         setShowEditForm(true)
     }
 
-    const handleEditProfile = (e, id) => {
+    const handleEditProfile = async (e, id) => {
         e.preventDefault()
         let user_id = user.id
         let newName = editProfileName
 
-        setShowEditForm(false)
+        const edit_profile_errors = [];
 
-        dispatch(editUserProfile(user_id, newName, id))
+        if (newName.length <= 0) edit_profile_errors.push("Please provide a valid profile name.");
+
+        if (edit_profile_errors.length > 0) {
+            setErrors(edit_profile_errors);
+        } else {
+            await dispatch(editUserProfile(user_id, newName, id))
+                .catch(async (res) => {
+                    const data = await res.json();
+                    if (data && data.errors) setErrors(data.errors)
+                });
+            // dispatch(getProfiles(userId))
+            setShowEditForm(false)
+        }
     }
 
     useEffect(() => {
@@ -44,7 +57,9 @@ function EditProfile({profile}) {
     return (
         <>
             <button className='profile-buttons' onClick={handleEditProfileForm}><FaEdit className='editProfileBtn' /></button>
+        <div>
             {showEditForm && (
+                <>
                 <div className='edit__profile'>
                         <div className='edit__profile'>
                             <input
@@ -57,7 +72,14 @@ function EditProfile({profile}) {
                             <button className='submit-profile-edit' type="submit" onClick={(e) => { handleEditProfile(e, profile?.id) }}>Submit</button>
                         </div>
                 </div>
+                </>
             )}
+            <div className='profile__errors'>
+                {errors.map((error) => (
+                    <li style={{ color: "white" }} key={error}>{error}</li>
+                ))}
+            </div>
+        </div>
         </>
     )
 

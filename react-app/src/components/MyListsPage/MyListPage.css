@@ -1,3 +1,28 @@
-.crap {
+.title {
     color: white;
+    text-decoration: underline;
+}
+
+.title h2 {
+    font-size: 28pt;
+}
+
+.my__lists {
+    margin-left: 10%;
+}
+
+.deleteListBtn, .editProfile_Btn{
+    margin-left: 2.5%;
+    border: none;
+    background: none;
+}
+
+.deleteListBtn {
+    transform: scale(1.1);
+    color: red;
+}
+
+.deleteListBtn:hover {
+    cursor: pointer;
+    transform: scale(1.2);
 }

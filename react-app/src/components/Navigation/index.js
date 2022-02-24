@@ -39,13 +39,13 @@ function Navbar({ isLoaded }) {
 
         </div>
         <div className='right__container'>
-            <div>
-              <Link to={"/login"}><button className='signin__btn'>Sign In</button></Link><Link to={'/profiles'}><button onClick={handleClick} className='signin__btn'>Demo</button></Link>
-            </div>
-            <div className='right-nav'>
-              <div className='profile-icon'>{isLoaded}</div>
-            </div>
+          <div>
+            <Link to={"/login"}><button className='signin__btn'>Sign In</button></Link><Link to={'/profiles'}><button onClick={handleClick} className='signin__btn'>Demo</button></Link>
           </div>
+          <div className='right-nav'>
+            <div className='profile-icon'>{isLoaded}</div>
+          </div>
+        </div>
       </>
       }
       {!user ? null :
@@ -67,14 +67,13 @@ function Navbar({ isLoaded }) {
         </>
       }
 
-          {path == '/profiles' ?<button className="logout-btn" onClick={handleLogout}>logout</button>:null}
-          {path !== '/profiles' ?
-            <div className='profile__icon'>
-             {!user ? null : <div className='my__lists__tab'><NavLink to={`/my-lists`}>My Lists</NavLink></div>}
-             {!user ? null :<ProfileButton />}
-            </div>
-          :null}
-
+      {path == '/profiles' ?<button className="navbar_logout" onClick={handleLogout}>logout</button>:null}
+      {path !== '/profiles' ?
+        <div className='profile__icon'>
+         {!user ? null : <div className='my__lists__tab'><NavLink to={`/my-lists`}>My Lists</NavLink></div>}
+         {!user ? null :<ProfileButton />}
+        </div>
+      :null}
     </nav>
   );
 }

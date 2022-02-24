@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, Redirect, useHistory } from 'react-router-dom';
 import { signUp } from '../../store/session';
@@ -15,15 +15,36 @@ const SignUpForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const handleClick = async (e) => {
-    await dispatch(sessionActions.login(username, email, password))
+  useEffect(() => {
 
-    history.push('/profiles')
+  })
+
+  const handleClick = async (e) => {
+    e.preventDefault()
+
+    const signupErrors = [];
+
+    if(username.length > 20) signupErrors.push("Username must not be longer than 20 characters");
+    if(!username.length) signupErrors.push("Must provide a username");
+    if(!email.includes("@")) signupErrors.push("Must be an Email: missing '@'");
+    if(password !== repeatPassword) signupErrors.push("Password did not match Confirm Password")
+
+    if (signupErrors.length > 0) {
+      return setErrors(signupErrors)
+    } else {
+      await dispatch(sessionActions.login(username, email, password))
+        .catch(async (res) => {
+          const data = await res.json();
+          if (data && data.errors) setErrors(data.errors)
+        });
+      history.push('/profiles')
+    }
   }
 
 
   const onSignUp = async (e) => {
     e.preventDefault();
+
     if (password === repeatPassword) {
       const data = await dispatch(signUp(username, email, password));
       if (data) {
@@ -57,26 +78,27 @@ const SignUpForm = () => {
     <div className="background__container"></div>
       <div className='form__container'>
         <form onSubmit={onSignUp}>
-          <div>
-            {errors.map((error, ind) => (
-              <div key={ind}>{error}</div>
-            ))}
-          </div>
           <div className='form__top__text'>
             <h1>Sign Up</h1>
+          <div className='errors'>
+            {errors.map((error) => (
+              <li style={{color: "white"}} key={error}>{error}</li>
+            ))}
+          </div>
           </div>
           <div>
             <input
               placeholder='Username'
               type='text'
               name='username'
+              required
               onChange={updateUsername}
               value={username}
             ></input>
           </div>
           <div>
             <input
-              type='text'
+              type='email'
               name='email'
               placeholder='Email Address'
               onChange={updateEmail}

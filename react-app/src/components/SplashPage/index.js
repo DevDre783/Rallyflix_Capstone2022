@@ -12,12 +12,15 @@ function SplashPage () {
         <>
             <div className="background__container"></div>
             <div className='middle__container'>
-                    <h1 className='splash__message'>
-                        Unlimited access to the world of Rally
-                    </h1>
-                <div className='input__container'>
-                    <input className='email__input' type='text' placeholder='Email Address'></input><Link to={'/sign-up'}><button className='get__started__btn'>Get Started <FaArrowRight/></button></Link>
-                </div>
+                <h1 className='splash__message'>
+                    Unlimited access to the world of Rally
+                </h1>
+            <div className='input__container'>
+                <input className='email__input' type='email' placeholder='Email Address'></input>
+                <Link to={'/sign-up'}>
+                    <button className='get__started__btn'>Get Started <FaArrowRight/></button>
+                </Link>
+            </div>
             </div>
         </>
     )

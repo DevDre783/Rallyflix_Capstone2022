@@ -11,8 +11,8 @@ import EditLists from '../EditMyLists';
 
 
 function MyListsPage({profileId}) {
-    console.log("FROM MYLISTPAGE",  profileId)
     const dispatch = useDispatch()
+    const [errors, setErrors] = useState([]);
     const [editListTitle, setEditListTitle] = useState("")
     const [showEditForm, setShowEditForm] = useState(false)
     const lists = Object.values(useSelector(state => state?.my_lists))
@@ -25,45 +25,78 @@ function MyListsPage({profileId}) {
 
     useEffect(() => {
         dispatch(getLists(profileId))
-    },[dispatch])
+    },[dispatch, profileId])
 
     const addListForm = (e) => {
         e.preventDefault()
 
-        setShowAddForm(true)
+        if (!showAddForm) {
+            setShowAddForm(true)
+        } else {
+            setShowAddForm(false)
+        }
     }
+
+    // const closeAddProfileForm = (e) => {
+    //     e.preventDefault()
+
+    //     setShowAddForm(true)
+    // }
 
     const handleAddList = async (e) => {
         e.preventDefault()
+        const addlist_errors = [];
 
-        console.log("??????? HANDLE ADD", newList, +profileId)
-        await dispatch(addNewList(newList, +profileId))
-        await dispatch(getLists(+profileId))
-        setShowAddForm(false)
+        if (newList.length <= 0) addlist_errors.push("Field must not be empty.")
+
+        if (addlist_errors.length > 0) {
+            setErrors(addlist_errors);
+        } else {
+            await dispatch(addNewList(newList, +profileId))
+            await dispatch(getLists(+profileId))
+                .catch(async (res) => {
+                    const data = await res.json();
+                    if (data && data.errors) setErrors(data.errors)
+                });
+            setShowAddForm(false)
+        }
     }
+
+
+    const my_lists = lists?.filter(list => {
+        console.log("in my_lists", +profileId)
+        return list?.profile_id === +profileId
+    })
 
 
     return (
         <div className='page__container'>
             <div>
-                <h1>My Lists <button className='add__list__btn' onClick={addListForm}><FaPlusCircle className='' /></button></h1>
+                <h1>My Lists <button className='add__list__btn' onClick={addListForm}><FaPlusCircle className='' /></button>
                 {showAddForm && (
-                    <div className='add__list'>
-                        <input
-                            type="text"
-                            name="add-profile"
-                            value={newList}
-                            onChange={(e) => setNewList(e?.target?.value)}
-                            placeholder="New List"
-                        />
-                        <button type="submit" onClick={handleAddList}>Add</button>
-                    </div>
+                    <>
+                        <div className='add__list'>
+                            <input
+                                type="text"
+                                name="add-profile"
+                                value={newList}
+                                onChange={(e) => setNewList(e?.target?.value)}
+                                placeholder="New List"
+                            />
+                            <button type="submit" onClick={handleAddList}>Add</button>
+                        </div>
+                        <div className='profile__errors'>
+                            {errors.map((error) => (
+                                <li style={{ color: "white" }} key={error}>{error}</li>
+                            ))}
+                        </div>
+                    </>
                 )}
-                {lists?.map(list => (
-                    <div key={list.title}>
-                        <h2 className='crap'>{list?.title}
+                </h1>
+                {my_lists?.map(list => (
+                    <div className='my__lists' key={list.title}>
+                        <h2 className='title'>{list?.title}
                         <EditLists profileId={list.profile_id} listId={list.id} list={list} className="idkyet"/>
-                        {/* <button id={list.id} className='deleteListBtn' onClick={handleDeleteList}><FaTrash  className='deleteListBtn'/></button> */}
                         </h2>
                         <VideosToList list={list} />
                     </div>

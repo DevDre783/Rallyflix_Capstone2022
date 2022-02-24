@@ -14,11 +14,32 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+
   const handleClick = async (e) => {
     await dispatch(sessionActions.login( email, password))
 
-    history.push('/profiles')
+    // history.push('/profiles')
   }
+
+  // const handleClick = async (e) => {
+  //   e.preventDefault()
+
+  //   const loginErrors = [];
+
+  //   if(!email.includes("@")) loginErrors.push("Must be an Email: missing '@'");
+  //   if(password) loginErrors.push("Password did not match Confirm Password")
+
+  //   if (loginErrors.length > 0) {
+  //     return setErrors(loginErrors)
+  //   } else {
+  //     await dispatch(sessionActions.login(username, email, password))
+  //       .catch(async (res) => {
+  //         const data = await res.json();
+  //         if (data && data.errors) setErrors(data.errors)
+  //       });
+  //     history.push('/profiles')
+  //   }
+  // }
 
   const onLogin = async (e) => {
     e.preventDefault();
@@ -46,8 +67,8 @@ const LoginForm = () => {
       <div className='form__container'>
         <form onSubmit={onLogin}>
           <div>
-            {errors.map((error, ind) => (
-              <div key={ind}>{error}</div>
+            {errors.map((error) => (
+              <li style={{color: "white"}} key={error}>{error}</li>
             ))}
           </div>
           <div className='form__top__text'>

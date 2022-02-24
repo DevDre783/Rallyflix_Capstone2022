@@ -72,6 +72,3 @@ def delete_list(id):
     db.session.commit()
 
     return {"deletedList": currentList.to_dict()}
-    # profileLists = List.query.filter(List.profile_id == Profile.id)
-
-    # return jsonify([list.to_dict() for list in profileLists])
