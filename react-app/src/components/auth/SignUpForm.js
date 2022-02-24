@@ -27,12 +27,13 @@ const SignUpForm = () => {
     if(username.length > 20) signupErrors.push("Username must not be longer than 20 characters");
     if(!username.length) signupErrors.push("Must provide a username");
     if(!email.includes("@")) signupErrors.push("Must be an Email: missing '@'");
+    // if(!email.length & !email.includes("@")) signupErrors.push("Must provide an email");
     if(password !== repeatPassword) signupErrors.push("Password did not match Confirm Password")
 
     if (signupErrors.length > 0) {
       return setErrors(signupErrors)
     } else {
-      await dispatch(sessionActions.login(username, email, password))
+      await dispatch(sessionActions.login(email, password))
         .catch(async (res) => {
           const data = await res.json();
           if (data && data.errors) setErrors(data.errors)

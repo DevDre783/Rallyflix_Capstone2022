@@ -70,7 +70,7 @@ function Navbar({ isLoaded }) {
       {path == '/profiles' ?<button className="navbar_logout" onClick={handleLogout}>logout</button>:null}
       {path !== '/profiles' ?
         <div className='profile__icon'>
-         {!user ? null : <div className='my__lists__tab'><NavLink to={`/my-lists`}>My Lists</NavLink></div>}
+         {!user ? null : <div className='my__lists__tab'><Link to={'/browse'} className="browse__videos"><h3>Browse Videos</h3></Link><NavLink to={`/my-lists`}>My Lists</NavLink></div>}
          {!user ? null :<ProfileButton />}
         </div>
       :null}
