@@ -4,13 +4,18 @@ const EDIT_LIST = "lists/EDIT_LIST"
 const DELETE_LIST = "lists/DELETE_LIST"
 
 
-const loadLists = my_lists => ({
+const loadLists = lists => ({
     type: LOAD,
-    my_lists
+    lists
 })
 
 const addList = list => ({
     type: ADD_LIST,
+    list
+})
+
+const editAList = (list) => ({
+    type: EDIT_LIST,
     list
 })
 
@@ -21,32 +26,26 @@ const deleteList = (list) => {
     }
 }
 
-const editAList = (list) => ({
-    type: EDIT_LIST,
-    list
-})
 
 export const getLists = (id) => async dispatch => {
-    console.log("FROM GET LISTS", id)
+    console.log("GET LISTS", id)
     const response = await fetch(`/api/my-lists/${id}`);
 
     if (response.ok) {
         const lists = await response.json();
-        // console.log("FROM List Store", lists)
         dispatch(loadLists(lists));
         return lists
     }
 }
 
-export const addNewList = (title, profileId) => async dispatch => {
-    console.log("IN addNewList THUNK", profileId, title)
-
-    const response = await fetch(`/api/my-lists/${+profileId}`, {
+export const addNewList = (title, id) => async dispatch => {
+    console.log("FROM THUNK", typeof(id))
+    const response = await fetch(`/api/my-lists/${id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            "profile_id": +profileId,
-            "title": title
+            id,
+            title
         })
     })
 
@@ -57,77 +56,69 @@ export const addNewList = (title, profileId) => async dispatch => {
     }
 }
 
-export const editList = (title, id) => async (dispatch) => {
-    console.log("IN STORE LIST", id, title)
-    const res = await fetch(`/api/my-lists/${id}`, {
+export const editList = (title, profileId, id) => async (dispatch) => {
+    const res = await fetch(`/api/my-lists/${profileId}`, {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-            "title": title
+            profileId,
+            id,
+            title
         })
     })
 
     if(res.ok) {
         const edited_list = await res.json()
-        // dispatch(deleteProfile(id));
-        console.log("THE PROFILES LIST", edited_list)
+
         dispatch(editAList(edited_list))
     }
 }
 
 
 export const deleteProfileLists = (id) => async (dispatch) => {
-    console.log("IN STORE LIST DELETE", +id)
     const res = await fetch(`/api/my-lists/${id}`, {
-        method: 'DELETE',
-        headers: {'Content-Type': 'application/json'}
+        method: 'DELETE'
     })
 
     if(res.ok) {
         const profiles_list = await res.json()
-        // dispatch(deleteProfile(id));
-        console.log("THE PROFILES LIST", profiles_list)
+
         dispatch(deleteList(profiles_list))
-        // dispatch(getLists(profiles_list));
+        return profiles_list
     }
 }
 
 const initialState = {
-    lists: []
+
 };
 
 const listsReducer = (state = initialState, action) => {
-    let newState;
+    let newState = {...state}
 
     switch (action.type) {
         case LOAD: {
-            return {
-                ...state,
-                lists: [...action.my_lists]
-            }
+            action.lists.forEach(list => {
+                newState[list.id] = list
+            });
+            return newState
         }
 
-        case ADD_LIST: {
-            return {
-                ...state,
-                lists: [...state.lists, action.list]
-            }
-        }
-
+        case ADD_LIST:
         case EDIT_LIST: {
-            return {
-                ...state,
-                [action.payload]: action.list
+            if(state[action.list.id] = action.list.id) {
+                newState[action.list.id] = action.list
             }
-        }
-
-        case DELETE_LIST: {
-            newState = { ...state };
-            delete newState[action.list]
             return newState;
         }
 
-        default: return state;
+        case DELETE_LIST: {
+            let newState = []
+            newState.push({...state})
+            return newState.filter((list) => list.id !== action.list.id);
+        }
+
+        default:
+            return state
     }
 }
 

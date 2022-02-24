@@ -69,7 +69,7 @@
     /* transition: 0.5s ease-in-out; */
 }
 
-.profile__img:hover {
+#WOOO:hover {
     /* background: transparent; */
     border: 2.5px solid white;
     cursor: pointer;
@@ -77,11 +77,25 @@
     transition: 0.5s ease-in-out; */
 }
 
-.profile button {
+.profile-buttons {
     border: none;
     background: none;
+    /* background-image: url(); */
     transform: scale(1.2);
     margin-right: 5%;
+}
+
+.submit-profile-edit {
+    border: none;
+}
+
+#WOOO {
+    height: 200px;
+    width: 200px;
+    border: none;
+    background-image: url(https://i.pinimg.com/originals/e3/94/30/e39430434d2b8207188f880ac66c6411.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
 }
 
 .add__profile__btn {

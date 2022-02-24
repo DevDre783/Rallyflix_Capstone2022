@@ -8,16 +8,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 
 
-
 function Navbar({ isLoaded }) {
   const user = useSelector(state => state.session.user)
   const location = useLocation()
-  const path = location?.pathname
-  const profileID = path.slice(8)
-  const homeRoute = path.slice(10)
-
-  console.log("LOCATION.....", profileID)
-  // const profiles = useSelector(state => state?.profile?.entries);
+  const path = location.pathname
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -26,6 +20,12 @@ function Navbar({ isLoaded }) {
       await dispatch(sessionActions.login('demo@aa.io', 'password'))
       history.push('/profiles')
   }
+
+  const handleLogout = async () => {
+    await dispatch(sessionActions.logout());
+
+    history.push('/');
+  };
 
 
   return (
@@ -51,7 +51,7 @@ function Navbar({ isLoaded }) {
       {!user ? null :
         <>
           <div className='logo__container'>
-            <Link to={`/browse/${homeRoute}`}><h1>Rallyflix</h1></Link>
+            <Link to={`/profiles`}><h1>Rallyflix</h1></Link>
           </div>
           <div className=''>
             <div>
@@ -66,12 +66,15 @@ function Navbar({ isLoaded }) {
           </div>
         </>
       }
-        {!user ? null :
-          <div className='profile__icon'>
-            <div className='my__lists__tab'><NavLink to={`/my-lists/${profileID}`}>My Lists</NavLink></div>
-            <ProfileButton />
-          </div>
-       }
+
+          {path == '/profiles' ?<button className="logout-btn" onClick={handleLogout}>logout</button>:null}
+          {path !== '/profiles' ?
+            <div className='profile__icon'>
+             {!user ? null : <div className='my__lists__tab'><NavLink to={`/my-lists`}>My Lists</NavLink></div>}
+             {!user ? null :<ProfileButton />}
+            </div>
+          :null}
+
     </nav>
   );
 }

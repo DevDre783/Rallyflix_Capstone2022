@@ -16,7 +16,12 @@ import { authenticate } from './store/session';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
+  const [profileId, setProfileId] = useState()
   const dispatch = useDispatch();
+
+  const getProfileId = (profileId) => {
+    setProfileId(profileId)
+  }
 
   useEffect(() => {
     (async() => {
@@ -31,7 +36,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navbar />
+      <Navbar profileId={profileId}/>
       <Footer />
       <Switch>
         <Route path='/' exact={true}>
@@ -44,13 +49,13 @@ function App() {
           <SignUpForm />
         </Route>
         <ProtectedRoute path="/profiles" exact={true}>
-          <ProfilesPage />
+          <ProfilesPage getProfileId={getProfileId}/>
         </ProtectedRoute>
-        <ProtectedRoute path="/browse/:profileId" exact={true}>
-          <BrowsePage />
+        <ProtectedRoute path="/browse" exact={true}>
+          <BrowsePage profileId={profileId}/>
         </ProtectedRoute>
-        <ProtectedRoute path="/my-lists/:id" exact={true}>
-          <MyListsPage />
+        <ProtectedRoute path="/my-lists" exact={true}>
+          <MyListsPage profileId={profileId}/>
         </ProtectedRoute>
       </Switch>
     </BrowserRouter>

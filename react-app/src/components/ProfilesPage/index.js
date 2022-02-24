@@ -11,16 +11,21 @@ import { FaPlusCircle, FaTrash } from 'react-icons/fa';
 import EditProfile from '../EditProfile';
 
 
-function ProfilesPage() {
+function ProfilesPage({getProfileId}) {
     const [newProfile, setNewProfile] = useState("")
     const [showAddForm, setShowAddForm] = useState(false)
     const profiles = useSelector(state => state?.profile?.entries);
     const user = useSelector(state => state?.session?.user);
+    const history = useHistory()
     const dispatch = useDispatch()
     const userId = user.id
 
-    // const currProfiles = profiles?.filter(profile => console.log("FLAG", profile))
-    // console.log("hiuhdihiwdhihdi", currProfiles)
+
+    const handleProfileSelect = (e) => {
+        getProfileId(e.target.value)
+
+        history.push('/browse')
+    }
 
     const addProfileForm = (e) => {
         e.preventDefault()
@@ -44,7 +49,6 @@ function ProfilesPage() {
     const handleDeleteProfile = (e, id) => {
         e.preventDefault()
         let user_id = user.id
-        console.log("IN PROFILE COMPONENT", id, user_id)
         dispatch(deleteUserProfile(id, user_id))
     }
 
@@ -53,6 +57,8 @@ function ProfilesPage() {
         // ?????
     }, [dispatch, userId])
 
+    // <img className='profile__img' src='https://i.pinimg.com/originals/e3/94/30/e39430434d2b8207188f880ac66c6411.png'></img>
+
     return (
         <>
             <div className='page_container'>
@@ -60,11 +66,11 @@ function ProfilesPage() {
                     {/* {profiles.length < 4 } */}
                     {profiles?.map(profile => (
                         <div className='profile'>
-                            <Link to={`/browse/${profile.id}`}><img className='profile__img' src='https://i.pinimg.com/originals/e3/94/30/e39430434d2b8207188f880ac66c6411.png'></img></Link>
+                            <button id="WOOO" value={profile.id} onClick={handleProfileSelect}></button>
                             <h1 className='placeholder'>{profile?.name}</h1>
                             <div className="edit__component">
                                 <EditProfile profile={profile} className="something"/>
-                                <button className='deleteProfileBtn' onClick={(e) => { handleDeleteProfile(e, profile?.id) }}><FaTrash  className='deleteProfileBtn'/></button>
+                                <button className='profile-buttons' onClick={(e) => { handleDeleteProfile(e, profile?.id) }}><FaTrash  className='deleteProfileBtn'/></button>
                             </div>
                         </div>
                     ))}
@@ -81,7 +87,7 @@ function ProfilesPage() {
                             onChange={(e) => setNewProfile(e.target.value)}
                             placeholder="Add Profile"
                         />
-                        <button type="submit" onClick={handleAddProfile}>Add</button>
+                        <button className='submit-add-profile' type="submit" onClick={handleAddProfile}>Add</button>
                     </div>
                 )}
             </div>

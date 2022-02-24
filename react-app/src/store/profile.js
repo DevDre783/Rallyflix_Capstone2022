@@ -27,7 +27,6 @@ const addProfile = (profile) => ({
 // })
 
 export const getProfiles = (userId) => async dispatch => {
-    // console.log("HEEELLLLOOOOOO", userId)
     const response = await fetch(`/api/profiles/${userId}`);
 
     if (response.ok) {
@@ -37,7 +36,6 @@ export const getProfiles = (userId) => async dispatch => {
 }
 
 export const addNewProfile = (userId, name) => async dispatch => {
-    console.log("WORKING???????", userId, name )
 
     const response = await fetch(`/api/profiles/`, {
         method: 'POST',
@@ -56,7 +54,6 @@ export const addNewProfile = (userId, name) => async dispatch => {
 
 
 export const editUserProfile = (user_id, newName, id) => async (dispatch) => {
-    console.log("IN STORE PROFILE 1", id, newName, user_id)
     const res = await fetch(`/api/profiles/${id}`, {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
@@ -69,13 +66,13 @@ export const editUserProfile = (user_id, newName, id) => async (dispatch) => {
     if(res.ok) {
         const profiles_list = await res.json()
         // dispatch(deleteProfile(id));
-        console.log("THE PROFILES LIST", profiles_list)
+
         dispatch(loadProfiles(profiles_list));
     }
 }
 
 export const deleteUserProfile = (id, user_id) => async (dispatch) => {
-    console.log("IN STORE PROFILE 1", id, user_id)
+
     const res = await fetch(`/api/profiles/${id}`, {
         method: 'DELETE',
         headers: {'Content-Type': 'application/json'},
@@ -86,8 +83,7 @@ export const deleteUserProfile = (id, user_id) => async (dispatch) => {
 
     if(res.ok) {
         const profiles_list = await res.json()
-        // dispatch(deleteProfile(id));
-        console.log("THE PROFILES LIST", profiles_list)
+        
         dispatch(loadProfiles(profiles_list));
     }
 }

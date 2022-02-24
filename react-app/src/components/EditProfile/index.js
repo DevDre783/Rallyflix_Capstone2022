@@ -30,6 +30,8 @@ function EditProfile({profile}) {
         let user_id = user.id
         let newName = editProfileName
 
+        setShowEditForm(false)
+
         dispatch(editUserProfile(user_id, newName, id))
     }
 
@@ -41,7 +43,7 @@ function EditProfile({profile}) {
 
     return (
         <>
-            <button onClick={handleEditProfileForm}><FaEdit className='editProfileBtn' /></button>
+            <button className='profile-buttons' onClick={handleEditProfileForm}><FaEdit className='editProfileBtn' /></button>
             {showEditForm && (
                 <div className='edit__profile'>
                         <div className='edit__profile'>
@@ -52,7 +54,7 @@ function EditProfile({profile}) {
                                 onChange={(e) => setEditProfileName(e.target.value)}
                                 placeholder={profile.name}
                             />
-                            <button type="submit" onClick={(e) => { handleEditProfile(e, profile?.id) }}>Submit</button>
+                            <button className='submit-profile-edit' type="submit" onClick={(e) => { handleEditProfile(e, profile?.id) }}>Submit</button>
                         </div>
                 </div>
             )}

@@ -10,35 +10,22 @@ import { FaEdit, FaPlusCircle, FaTrash } from 'react-icons/fa';
 import EditLists from '../EditMyLists';
 
 
-function MyListsPage() {
+function MyListsPage({profileId}) {
+    console.log("FROM MYLISTPAGE",  profileId)
     const dispatch = useDispatch()
     const [editListTitle, setEditListTitle] = useState("")
     const [showEditForm, setShowEditForm] = useState(false)
-    const lists = useSelector(state => state?.my_lists.lists)
+    const lists = Object.values(useSelector(state => state?.my_lists))
     const [newList, setNewList] = useState("")
     const [currentList, setCurrentList] = useState([])
     const [showAddForm, setShowAddForm] = useState(false)
     const [isLoaded, setIsLoaded] = useState(false)
-    const profileId = useParams()
-    console.log("FROM MYLISTPAGE", lists[0])
+    console.log("?????? MY LIST PAGE", lists)
 
-    // console.log("FROM MyListsPage", lists)
-    // useEffect(() => {
-    //     (async () => {
-    //         const lists = await dispatch(getLists(+profileId?.id))
-    //         console.log("??????", lists)
-    //         const myLists = Object.values(lists[0])
-    //         setCurrentList(myLists)
-    //         await dispatch(getLists(+profileId?.id))
-    //
-    //     })();
-    // }, [dispatch, +profileId])
 
     useEffect(() => {
-        dispatch(getLists(+profileId.id))
-        // setIsLoaded(true)
-        // dispatch(deleteProfileLists())
-    },[dispatch, +profileId])
+        dispatch(getLists(profileId))
+    },[dispatch])
 
     const addListForm = (e) => {
         e.preventDefault()
@@ -46,59 +33,44 @@ function MyListsPage() {
         setShowAddForm(true)
     }
 
-    const handleAddList = (e) => {
+    const handleAddList = async (e) => {
         e.preventDefault()
 
-        dispatch(getLists(+profileId?.id))
-        const newListAdd = dispatch(addNewList(newList, +profileId?.id))
-
-        dispatch(getLists(+profileId?.id))
+        console.log("??????? HANDLE ADD", newList, +profileId)
+        await dispatch(addNewList(newList, +profileId))
+        await dispatch(getLists(+profileId))
         setShowAddForm(false)
     }
 
-    // const handleDeleteList = (e, id) => {
-    //     e.preventDefault()
-    //     // console.log("FROM DELETE", e.target.id)
-    //     // let list_id = e.target.id
-    //     console.log("IN PROFILE COMPONENT", id)
-    //     dispatch(deleteProfileLists(id)).then(() => dispatch(getLists(+profileId.id)))
 
-    // }
-
-    // console.log("CURRENT LIST", currentList)
-
-
-    // if (isLoaded) {
-
-        return (
-            <div className='page__container'>
-                <div>
-                    <h1>My Lists <button className='add__list__btn' onClick={addListForm}><FaPlusCircle className='' /></button></h1>
-                    {showAddForm && (
-                        <div className='add__list'>
-                            <input
-                                type="text"
-                                name="add-profile"
-                                value={newList}
-                                onChange={(e) => setNewList(e?.target?.value)}
-                                placeholder="New List"
-                            />
-                            <button type="submit" onClick={handleAddList}>Add</button>
-                        </div>
-                    )}
-                    {lists[0]?.map(list => (
-                        <div>
-                            <h2 className='crap'>{list?.title}
-                            <EditLists listId={list.id} list={list} className="idkyet"/>
-                            {/* <button id={list.id} className='deleteListBtn' onClick={handleDeleteList}><FaTrash  className='deleteListBtn'/></button> */}
-                            </h2>
-                            <VideosToList list={list} />
-                        </div>
-                    )).reverse()}
-                </div>
+    return (
+        <div className='page__container'>
+            <div>
+                <h1>My Lists <button className='add__list__btn' onClick={addListForm}><FaPlusCircle className='' /></button></h1>
+                {showAddForm && (
+                    <div className='add__list'>
+                        <input
+                            type="text"
+                            name="add-profile"
+                            value={newList}
+                            onChange={(e) => setNewList(e?.target?.value)}
+                            placeholder="New List"
+                        />
+                        <button type="submit" onClick={handleAddList}>Add</button>
+                    </div>
+                )}
+                {lists?.map(list => (
+                    <div key={list.title}>
+                        <h2 className='crap'>{list?.title}
+                        <EditLists profileId={list.profile_id} listId={list.id} list={list} className="idkyet"/>
+                        {/* <button id={list.id} className='deleteListBtn' onClick={handleDeleteList}><FaTrash  className='deleteListBtn'/></button> */}
+                        </h2>
+                        <VideosToList list={list} />
+                    </div>
+                )).reverse()}
             </div>
-        )
-    // } else return <></>
+        </div>
+    )
 
 }
 

@@ -8,21 +8,23 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { editUserProfile, getProfiles } from "../../store/profile";
 // import { useParams } from 'react-router-dom';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import { editList, getLists, deleteProfileLists } from '../../store/list';
+import { editList, getLists, deleteProfileLists, addNewList } from '../../store/list';
 import { useParams } from 'react-router-dom';
 
 
-function EditLists({listId, list}) {
+function EditLists({profileId, list, listId}) {
+
     const [editListTitle, setEditListTitle] = useState(list.title)
+    // console.log("EDIT LIST TITLE", editListTitle)
     const [showEditForm, setShowEditForm] = useState(false)
+    const [newList, setNewList] = useState("")
     const lists = useSelector(state => state?.my_lists.lists)
-    // console.log("FROM EDIT", listId)
     const dispatch = useDispatch()
-    const profileId = useParams()
+    // const profileId = useParams()
 
     useEffect(() => {
-
-    }, [dispatch])
+        dispatch(getLists(profileId))
+    }, [dispatch, profileId])
 
     const handleEditListForm = (e) => {
         e.preventDefault()
@@ -35,21 +37,20 @@ function EditLists({listId, list}) {
     }
 
 
-    const handleEditList = (e) => {
+    const handleEditList = async (e) => {
         e.preventDefault()
+
+        console.log("?????? FROM EDIT HANDLE", profileId)
+        await dispatch(editList(editListTitle, profileId, listId))
+        await dispatch(getLists(profileId))
         setShowEditForm(false)
-        let newTitle = editListTitle
-        // console.log(newTitle)
-        console.log("HANDLE EDIT !!!!!!", +profileId.id)
-        dispatch(editList(newTitle, list.id)).then(() => dispatch(getLists(+profileId.id)))
     }
 
-    const handleDeleteList = () => {
-        // e.preventDefault()
-        // console.log("FROM DELETE", e.target.id)
-        // let list_id = e.target.id
-        console.log("IN PROFILE COMPONENT", list.id)
-        dispatch(deleteProfileLists(list.id)).then(() => dispatch(getLists(+profileId.id)))
+    const handleDeleteList = async () => {
+        console.log("LIST ID", listId)
+        console.log(profileId)
+        await dispatch(deleteProfileLists(listId))
+        await dispatch(getLists(profileId))
     }
 
 
