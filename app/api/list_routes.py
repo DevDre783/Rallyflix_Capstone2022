@@ -15,6 +15,15 @@ def profile_lists(id):
     return jsonify([list.to_dict() for list in lists])
 
 
+@list_routes.route('/load-videos/<int:listId>')
+@login_required
+def load_videos(listId):
+
+    list = List.query.get(listId)
+
+    return jsonify([video.to_dict() for video in list.videos])
+
+
 @list_routes.route('/add-video', methods=['POST'])
 @login_required
 def add_video():

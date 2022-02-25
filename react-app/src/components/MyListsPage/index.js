@@ -25,6 +25,7 @@ function MyListsPage({profileId}) {
 
     useEffect(() => {
         dispatch(getLists(profileId))
+        dispatch(getVideos(profileId))
     },[dispatch, profileId])
 
     const addListForm = (e) => {

@@ -1,10 +1,27 @@
+const LOAD = "videos/LOAD"
 const ADD_VIDEO = "videos/ADD_VIDEO"
+
+
+const load = videos => ({
+    type: LOAD,
+    videos
+})
 
 
 const addVideo = video => ({
     type: ADD_VIDEO,
     video
 })
+
+
+export const loadVideosToList = (listId) => async dispatch => {
+    const response = await fetch(`api/my-lists/load-videos/${listId}`)
+
+    if (response.ok) {
+        const listVideos = await response.json();
+        dispatch(load(listVideos));
+    }
+}
 
 
 export const addVideoToList = (listId, videoId) => async dispatch => {
@@ -33,6 +50,12 @@ const videosReducer = (state = initialState, action) => {
     let newState = {...state}
 
     switch (action.type) {
+        case LOAD: {
+            action.videos.forEach(video => {
+                newState[video.id] = video
+            });
+            return newState
+        }
 
         case ADD_VIDEO: {
             newState[action.video.id] = action.video
