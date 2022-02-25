@@ -35,7 +35,7 @@
 
 .individual__video {
     /* padding-top: 2.5%; */
-    margin-bottom: 25%;
+    margin-bottom: 2%;
     transition-duration: 0.3s;
     border: rgb(66, 66, 66) solid 1px;
 }
@@ -43,4 +43,8 @@
 .individual__video:hover {
     transform: scale(1.9);
     transition-duration: 0.3s
+}
+
+.addtolist_btn {
+    margin-bottom: 25%;
 }

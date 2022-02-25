@@ -2,6 +2,8 @@ const LOAD = "lists/LOAD";
 const ADD_LIST = "lists/ADD_LIST"
 const EDIT_LIST = "lists/EDIT_LIST"
 const DELETE_LIST = "lists/DELETE_LIST"
+const ADD_VIDEO = "lists/ADD_VIDEO"
+
 
 
 const loadLists = lists => ({
@@ -25,6 +27,11 @@ const deleteList = (list) => {
         list
     }
 }
+
+const addVideo = video => ({
+    type: ADD_VIDEO,
+    video
+})
 
 
 export const getLists = (id) => async dispatch => {
@@ -88,6 +95,26 @@ export const deleteProfileLists = (id) => async (dispatch) => {
     }
 }
 
+
+export const addVideoToList = (listId, videoId, profileId) => async dispatch => {
+    const response = await fetch(`/api/my-lists/add-video`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            profileId,
+            listId,
+            videoId
+        })
+    })
+
+    if (response.ok) {
+        const video = await response.json();
+        dispatch(addVideo(video))
+        return video
+    }
+}
+
+
 const initialState = {
 
 };
@@ -100,6 +127,11 @@ const listsReducer = (state = initialState, action) => {
             action.lists.forEach(list => {
                 newState[list.id] = list
             });
+            return newState
+        }
+
+        case ADD_VIDEO: {
+            newState[action.video.id] = action.video
             return newState
         }
 

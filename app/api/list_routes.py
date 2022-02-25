@@ -15,6 +15,25 @@ def profile_lists(id):
     return jsonify([list.to_dict() for list in lists])
 
 
+@list_routes.route('/add-video', methods=['POST'])
+@login_required
+def add_video():
+    data = request.json
+
+    newList = List(
+        id = data["listId"],
+        profile_id = data["profileId"],
+        video_id = data["videoId"]
+    )
+
+    if newList:
+        db.session.add(newList)
+        db.session.commit()
+        return jsonify(newList.to_dict())
+    else:
+        return make_response({'errors': 'Error(s) on adding video to list.'})
+
+
 @list_routes.route('/<int:id>', methods=['POST'])
 @login_required
 def add_list(id):

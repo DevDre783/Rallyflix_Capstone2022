@@ -14,7 +14,7 @@ function VideosToList({list}) {
 
 
     useEffect(() => {
-        dispatch(getVideos(profileId.id))
+        dispatch(getVideos(list.profile_id))
     }, [])
 
     const myVideo = videos.find(video => video.id === list.video_id)
