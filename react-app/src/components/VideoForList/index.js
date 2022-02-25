@@ -11,6 +11,8 @@ function VideosToList({list}) {
     const dispatch = useDispatch()
     const videos = Object.values(useSelector(state => state?.list_videos))
 
+    console.log("VIDEOSTOLIST!!!!!!!!!!", videos)
+
 
     useEffect(() => {
         dispatch(loadVideosToList(list.id))
