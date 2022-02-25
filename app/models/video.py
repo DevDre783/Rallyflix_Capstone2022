@@ -1,5 +1,6 @@
 from email.policy import default
 from .db import db
+from .list_to_video import list_to_videos
 
 class Video(db.Model):
     __tablename__ = "videos"
@@ -11,7 +12,7 @@ class Video(db.Model):
 
 
     list_info = db.relationship("List", back_populates="video_info")
-
+    list_video_info = db.relationship("List", secondary=list_to_videos, back_populates="videos")
 
     def to_dict(self):
         return {

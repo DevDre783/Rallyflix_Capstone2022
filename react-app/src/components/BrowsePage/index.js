@@ -6,7 +6,7 @@ import { getVideos } from '../../store/browse';
 import { Redirect, useParams } from 'react-router-dom';
 import { FaAccusoft, FaPlus } from 'react-icons/fa';
 import { getLists } from '../../store/list';
-import { addVideoToList } from '../../store/list';
+import { addVideoToList } from '../../store/videos';
 
 
 function BrowsePage({profileId}) {
@@ -27,7 +27,7 @@ function BrowsePage({profileId}) {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        dispatch(addVideoToList(listID, videoID, profileId))
+        dispatch(addVideoToList(listID, videoID))
     }
 
     useEffect(() => {

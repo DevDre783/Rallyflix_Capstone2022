@@ -1,5 +1,6 @@
 from email.policy import default
 from .db import db
+from .list_to_video import list_to_videos
 
 
 class List(db.Model):
@@ -9,6 +10,11 @@ class List(db.Model):
     title = db.Column(db.String(150), nullable=False)
     profile_id = db.Column(db.Integer, db.ForeignKey("profiles.id"), nullable=False)
     video_id = db.Column(db.Integer, db.ForeignKey("videos.id"))
+    videos = db.relationship(
+        "Video",
+        secondary=list_to_videos,
+        back_populates="list_video_info"
+    )
 
 
     profile_info = db.relationship("Profile", back_populates="list_info")

@@ -20,16 +20,13 @@ def profile_lists(id):
 def add_video():
     data = request.json
 
-    newList = List(
-        id = data["listId"],
-        profile_id = data["profileId"],
-        video_id = data["videoId"]
-    )
+    list = List.query.get(data["listId"])
+    video = Video.query.get(data["videoId"])
 
-    if newList:
-        db.session.add(newList)
+    if list and video:
+        list.videos.append(video)
         db.session.commit()
-        return jsonify(newList.to_dict())
+        return jsonify(list.to_dict())
     else:
         return make_response({'errors': 'Error(s) on adding video to list.'})
 
