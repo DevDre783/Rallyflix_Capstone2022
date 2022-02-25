@@ -20,6 +20,7 @@ def profile_lists(id):
 def load_videos(listId):
 
     list = List.query.get(listId)
+    print("FROM load_videos API.....", list)
 
     return jsonify([video.to_dict() for video in list.videos])
 

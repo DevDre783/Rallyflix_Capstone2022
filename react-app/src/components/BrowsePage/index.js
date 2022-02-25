@@ -20,7 +20,7 @@ function BrowsePage({profileId}) {
 
     const [ listID, setListID ] = useState(my_lists[0]?.id)
     const [ videoID, setVideoID ] = useState()
-    console.log("HELLO????????", my_lists)
+ 
     const [ showList, setShowList ] = useState(false);
     const videos = useSelector(state => state?.videos?.videos_list)
 

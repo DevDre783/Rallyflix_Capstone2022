@@ -16,9 +16,10 @@ const addVideo = video => ({
 
 export const loadVideosToList = (listId) => async dispatch => {
     const response = await fetch(`api/my-lists/load-videos/${listId}`)
-
+    console.log("FROM loadVideos THUNK....", listId)
     if (response.ok) {
         const listVideos = await response.json();
+        console.log("FROM LOAD VIDEOS THUNK", listVideos)
         dispatch(load(listVideos));
     }
 }
