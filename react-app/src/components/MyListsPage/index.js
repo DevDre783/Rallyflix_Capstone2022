@@ -69,6 +69,8 @@ function MyListsPage({profileId}) {
         return list?.profile_id === +profileId
     })
 
+    console.log("MY LISTS FROM LIST COMP", my_lists)
+
 
     return (
         <div className='page__container'>
