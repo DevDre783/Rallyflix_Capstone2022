@@ -4,13 +4,15 @@ import session from './session'
 import profile from './profile';
 import videos from './browse'
 import my_lists from './list'
+import list_videos from './videos'
 
 
 const rootReducer = combineReducers({
   session,
   profile,
   videos,
-  my_lists
+  my_lists,
+  list_videos
 });
 
 

@@ -75,7 +75,7 @@ function ProfilesPage({ getProfileId }) {
                 <div className='users__profiles'>
                     {/* {profiles.length < 4 } */}
                     {profiles?.map(profile => (
-                        <div className='profile'>
+                        <div key={profile.id} className='profile'>
                             <button id="WOOO" value={profile.id} onClick={handleProfileSelect}></button>
                             <h1 className='placeholder'>{profile?.name}</h1>
                             <div className="edit__component">

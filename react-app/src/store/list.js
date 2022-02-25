@@ -4,6 +4,7 @@ const EDIT_LIST = "lists/EDIT_LIST"
 const DELETE_LIST = "lists/DELETE_LIST"
 
 
+
 const loadLists = lists => ({
     type: LOAD,
     lists
@@ -87,6 +88,7 @@ export const deleteProfileLists = (id) => async (dispatch) => {
         return profiles_list
     }
 }
+
 
 const initialState = {
 

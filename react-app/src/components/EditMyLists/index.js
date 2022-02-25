@@ -24,7 +24,7 @@ function EditLists({ profileId, list, listId }) {
     // const profileId = useParams()
 
     useEffect(() => {
-        // dispatch(getLists(profileId))
+       
     }, [dispatch])
 
     const handleEditListForm = (e) => {
@@ -47,8 +47,8 @@ function EditLists({ profileId, list, listId }) {
         if (editlist_errors.length > 0) {
             setErrors(editlist_errors);
         } else {
-            await dispatch(editList(editListTitle, profileId, listId))
-            await dispatch(getLists(profileId))
+            dispatch(editList(editListTitle, profileId, listId))
+            dispatch(getLists(profileId))
                 .catch(async (res) => {
                     const data = await res.json();
                     if (data && data.errors) setErrors(data.errors)
@@ -58,8 +58,6 @@ function EditLists({ profileId, list, listId }) {
     }
 
     const handleDeleteList = async () => {
-        console.log("LIST ID", listId)
-        console.log(profileId)
         await dispatch(deleteProfileLists(listId))
         await dispatch(getLists(profileId))
     }

@@ -25,6 +25,7 @@ function MyListsPage({profileId}) {
 
     useEffect(() => {
         dispatch(getLists(profileId))
+        dispatch(getVideos(profileId))
     },[dispatch, profileId])
 
     const addListForm = (e) => {
@@ -98,7 +99,7 @@ function MyListsPage({profileId}) {
                         <h2 className='title'>{list?.title}
                         <EditLists profileId={list.profile_id} listId={list.id} list={list} className="idkyet"/>
                         </h2>
-                        <VideosToList list={list} />
+                        <VideosToList list={list} profileId={list.profile_id}/>
                     </div>
                 )).reverse()}
             </div>
