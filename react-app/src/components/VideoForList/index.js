@@ -9,14 +9,14 @@ import { useParams } from 'react-router-dom';
 
 function VideosToList({list}) {
     const dispatch = useDispatch()
-    // const videos = Object.values(useSelector(state => state?.videos.videos_list))
+    const videos = Object.values(useSelector(state => state.videos.videos_list))
 
-    
+
     useEffect(() => {
         dispatch(loadVideosToList(list?.id))
     }, [dispatch])
 
-    const videos = Object.values(useSelector(state => state.list_videos))
+    // const videos = Object.values(useSelector(state => state.list_videos))
 
     // console.log('your title', list)
     console.log('your videos', videos)
@@ -35,7 +35,7 @@ function VideosToList({list}) {
         <div>
             <div>
             {videos?.map(video => (
-                    <h1 style={{color: "white"}}>{video.title}</h1>
+                <h1 style={{color: "white"}}>{video.title}</h1>
             ))}
             </div>
         </div>

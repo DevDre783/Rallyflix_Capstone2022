@@ -22,9 +22,11 @@ class List(db.Model):
 
 
     def to_dict(self):
+        repr(self.videos)
         return {
             'id': self.id,
             'title': self.title,
             'profile_id': self.profile_id,
-            'video_id': self.video_id
+            'video_id': self.video_id,
+            "videos": [video.to_dict() for video in self.videos]
         }
