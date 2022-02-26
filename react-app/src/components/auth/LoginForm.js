@@ -26,8 +26,8 @@ const LoginForm = () => {
 
     const loginErrors = [];
 
-    if(!email.includes("@")) loginErrors.push("Must be an Email: missing '@'");
-    // if (setPassword(e.target.value) !== password) loginErrors.push("Password is incorrect, please Try Again")
+    if(!email.includes("@")) loginErrors.push("Please provide a valid Email");
+    if (!password) loginErrors.push("Please provide your password")
 
     if (loginErrors.length > 0) {
       return setErrors(loginErrors)
