@@ -8,33 +8,35 @@ import { useParams } from 'react-router-dom';
 
 
 function VideosToList({list}) {
+    console.log("LIST VIDEOS", list)
     const dispatch = useDispatch()
     const videos = Object.values(useSelector(state => state.videos.videos_list))
 
 
     useEffect(() => {
-        dispatch(loadVideosToList(list?.id))
-    }, [dispatch])
+        dispatch(loadVideosToList(list))
+    }, [dispatch, list])
 
-    // const videos = Object.values(useSelector(state => state.list_videos))
+    // const videos = useSelector(state => state.list_videos))
 
-    // console.log('your title', list)
+    console.log('your list content', list.videos)
+
     console.log('your videos', videos)
 
-    // const target = videos?.filter(vid => vid.id === list.id)
+    // const target = videos?.filter(vid => vid?.id == blah?.id)
 
-    // console.log('here is your target',target)
+    // console.log('here is your target', target)
     // console.log("LIST FROM VIDEOSTOLIST", list)
 
 
     // console.log("VIDEO COMPONENt STATE", videos)
     if(!videos.length) {
-        return (<h1>Wait....</h1>)
+        return (<h1>Loading....</h1>)
     }
     return (
         <div>
             <div>
-            {videos?.map(video => (
+            {list?.map(video => (
                 <h1 style={{color: "white"}}>{video.title}</h1>
             ))}
             </div>
