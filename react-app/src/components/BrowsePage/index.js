@@ -3,14 +3,16 @@ import './BrowsePage.css';
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { getVideos } from '../../store/browse';
-import { Redirect, useParams } from 'react-router-dom';
-import { FaAccusoft, FaPlus } from 'react-icons/fa';
+import { Redirect, useHistory, useParams } from 'react-router-dom';
+
 import { getLists } from '../../store/list';
 import { addVideoToList } from '../../store/videos';
 
 
 function BrowsePage({profileId}) {
     const dispatch = useDispatch();
+    const history = useHistory()
+    const [errors, setErrors] = useState([])
     const lists = Object.values(useSelector(state => state?.my_lists))
 
     const my_lists = lists?.filter(list => {
@@ -26,7 +28,15 @@ function BrowsePage({profileId}) {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        dispatch(addVideoToList(listID, videoID))
+        const addedVideo = dispatch(addVideoToList(listID, videoID))
+            .catch(async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(data.errors)
+            });
+
+        if (addedVideo) {
+            history.push('/my-lists')
+        }
     }
 
     useEffect(() => {

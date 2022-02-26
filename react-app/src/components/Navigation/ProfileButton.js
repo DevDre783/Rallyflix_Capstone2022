@@ -42,6 +42,7 @@ function ProfileButton() {
       <button className="profile-menu" onClick={openMenu}>
         <i className="fas fa-bars" />
         <i className="fas fa-user-circle" />
+        {/* <img className='fas fa-user-circle' src='https://i.pinimg.com/originals/e3/94/30/e39430434d2b8207188f880ac66c6411.png'></img> */}
       </button>
       {/* } */}
       {showMenu && (

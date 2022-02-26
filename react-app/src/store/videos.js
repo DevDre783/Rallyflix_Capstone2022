@@ -41,7 +41,7 @@ export const addVideoToList = (listId, videoId) => async dispatch => {
 
     if (response.ok) {
         const video = await response.json();
-        console.log(">>>>>>>>", video)
+        // console.log(">>>>>>>>", video)
         dispatch(addVideo(video))
         return video
     }

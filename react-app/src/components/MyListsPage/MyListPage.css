@@ -17,6 +17,18 @@
     background: none;
 }
 
+.add__list__btn {
+    transform: scale(1.5);
+    border: none;
+    background: none;
+    color: rgb(190, 190, 190);
+}
+
+.add__list__btn:hover {
+    cursor: pointer;
+    color: white;
+}
+
 .deleteListBtn {
     transform: scale(1.1);
     color: red;
@@ -25,4 +37,8 @@
 .deleteListBtn:hover {
     cursor: pointer;
     transform: scale(1.2);
+}
+
+.profile__errors {
+    margin-top: 2%;
 }
