@@ -166,3 +166,7 @@
     justify-content: space-around;
     margin-left: -1.5%;
 }
+
+.profile__errors {
+    margin-left: 45%;
+}

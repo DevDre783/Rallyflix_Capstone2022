@@ -19,7 +19,7 @@ function BrowsePage({profileId}) {
         return list?.profile_id === +profileId
     })
 
-    const [ listID, setListID ] = useState(1)
+    const [ listID, setListID ] = useState()
     const [ videoID, setVideoID ] = useState(-1)
 
     const [ showList, setShowList ] = useState(false);
