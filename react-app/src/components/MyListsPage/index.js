@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import VideosToList from '../VideoForList';
 import { FaEdit, FaPlusCircle, FaTrash } from 'react-icons/fa';
 import EditLists from '../EditMyLists';
+import { loadVideosToList } from '../../store/videos';
 
 
 function MyListsPage({profileId}) {
@@ -20,12 +21,12 @@ function MyListsPage({profileId}) {
     const [currentList, setCurrentList] = useState([])
     const [showAddForm, setShowAddForm] = useState(false)
     const [isLoaded, setIsLoaded] = useState(false)
-    console.log("?????? MY LIST PAGE", lists)
+    // console.log("?????? MY LIST PAGE", lists)
 
 
     useEffect(() => {
         dispatch(getLists(profileId))
-        dispatch(getVideos(profileId))
+        // dispatch(getVideos(profileId))
     },[dispatch, profileId])
 
     const addListForm = (e) => {
@@ -46,6 +47,7 @@ function MyListsPage({profileId}) {
 
     const handleAddList = async (e) => {
         e.preventDefault()
+
         const addlist_errors = [];
 
         if (newList.length <= 0) addlist_errors.push("Field must not be empty.")
@@ -54,6 +56,7 @@ function MyListsPage({profileId}) {
             setErrors(addlist_errors);
         } else {
             await dispatch(addNewList(newList, +profileId))
+            // await dispatch(loadVideosToList(newList?.id))
             await dispatch(getLists(+profileId))
                 .catch(async (res) => {
                     const data = await res.json();
@@ -65,11 +68,11 @@ function MyListsPage({profileId}) {
 
 
     const my_lists = lists?.filter(list => {
-        console.log("in my_lists", +profileId)
+        // console.log("in my_lists", +profileId)
         return list?.profile_id === +profileId
     })
 
-    console.log("MY LISTS FROM LIST COMP", my_lists)
+    // console.log("MY LISTS FROM LIST COMP", my_lists)
 
 
     return (

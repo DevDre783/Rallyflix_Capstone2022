@@ -14,19 +14,20 @@ function BrowsePage({profileId}) {
     const lists = Object.values(useSelector(state => state?.my_lists))
 
     const my_lists = lists?.filter(list => {
-        console.log("in my_lists", +profileId)
         return list?.profile_id === +profileId
     })
+    console.log("MY LISTS", my_lists)
 
-    const [ listID, setListID ] = useState(my_lists[0]?.id)
+    const [ listID, setListID ] = useState(1)
     const [ videoID, setVideoID ] = useState()
- 
+    console.log("FROM BROWSE COMP", listID, videoID)
+
     const [ showList, setShowList ] = useState(false);
     const videos = useSelector(state => state?.videos?.videos_list)
 
     const handleSubmit = (e) => {
         e.preventDefault()
-
+        console.log("FROM HANDLE ADD", listID, videoID)
         dispatch(addVideoToList(listID, videoID))
     }
 
@@ -60,7 +61,7 @@ function BrowsePage({profileId}) {
                                         <option value={list.id} key={list.id}>{list.title}</option>
                                     ))}
                                 </select>
-                                <button className='list_choice_submit'>Submit</button>
+                                <button type='submit' className='list_choice_submit'>Submit</button>
                             </form>
                         </p>
                     </div>

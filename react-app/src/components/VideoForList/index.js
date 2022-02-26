@@ -9,35 +9,36 @@ import { useParams } from 'react-router-dom';
 
 function VideosToList({list}) {
     const dispatch = useDispatch()
-    const videos = Object.values(useSelector(state => state?.videos.videos_list))
-    // const videos = useSelector(state => state?.videos.videos_list)
+    // const videos = Object.values(useSelector(state => state?.videos.videos_list))
 
-    console.log("LIST FROM VIDEOSTOLIST", list)
-
-
+    
     useEffect(() => {
-        dispatch(loadVideosToList(list.id))
+        dispatch(loadVideosToList(list?.id))
     }, [dispatch])
-    console.log("VIDEO COMPONENt STATE", videos)
+
+    const videos = Object.values(useSelector(state => state.list_videos))
+
+    // console.log('your title', list)
+    console.log('your videos', videos)
+
+    // const target = videos?.filter(vid => vid.id === list.id)
+
+    // console.log('here is your target',target)
+    // console.log("LIST FROM VIDEOSTOLIST", list)
 
 
+    // console.log("VIDEO COMPONENt STATE", videos)
     if(!videos.length) {
         return (<h1>Wait....</h1>)
     }
-
-
     return (
         <div>
-            <h1>HELLO</h1>
-            {/* <p>{videos[0]}</p> */}
-            {videos?.map(video => {
-                <>
-                    <h1>{video?.summary}</h1>
-                    <iframe className="" width="300" height="175" src={video?.url} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen="allowFullScreen"></iframe>
-                </>
-            })}
+            <div>
+            {videos?.map(video => (
+                    <h1 style={{color: "white"}}>{video.title}</h1>
+            ))}
+            </div>
         </div>
     )
 }
-
 export default VideosToList;

@@ -13,7 +13,7 @@ function AddToList({profileId}) {
     const lists = Object.values(useSelector(state => state?.my_lists))
 
     const my_lists = lists?.filter(list => {
-        console.log("in my_lists", +profileId)
+        // console.log("in my_lists", +profileId)
         return list?.profile_id === +profileId
     })
 

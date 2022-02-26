@@ -33,7 +33,7 @@ const SignUpForm = () => {
     if (signupErrors.length > 0) {
       return setErrors(signupErrors)
     } else {
-      await dispatch(sessionActions.login(email, password))
+      await dispatch(sessionActions.signUp(username, email, password))
         .catch(async (res) => {
           const data = await res.json();
           if (data && data.errors) setErrors(data.errors)
