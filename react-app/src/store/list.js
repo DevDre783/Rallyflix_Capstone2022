@@ -29,7 +29,7 @@ const deleteList = (list) => {
 
 
 export const getLists = (id) => async dispatch => {
-    console.log("GET LISTS", id)
+    // console.log("GET LISTS", id)
     const response = await fetch(`/api/my-lists/${id}`);
 
     if (response.ok) {
@@ -40,7 +40,7 @@ export const getLists = (id) => async dispatch => {
 }
 
 export const addNewList = (title, id) => async dispatch => {
-    console.log("FROM THUNK", typeof(id))
+    // console.log("FROM THUNK", typeof(id))
     const response = await fetch(`/api/my-lists/${id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

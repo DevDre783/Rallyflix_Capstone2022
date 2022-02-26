@@ -31,7 +31,9 @@ def add_video():
     data = request.json
 
     list = List.query.get(data["listId"])
+    print("LIST QUERY....", list)
     video = Video.query.get(data["videoId"])
+    print("VIDEO QUERY....", video)
 
     if list and video:
         list.videos.append(video)
