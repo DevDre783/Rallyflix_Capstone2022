@@ -16,18 +16,16 @@ function BrowsePage({profileId}) {
     const my_lists = lists?.filter(list => {
         return list?.profile_id === +profileId
     })
-    console.log("MY LISTS", my_lists)
 
     const [ listID, setListID ] = useState(1)
-    const [ videoID, setVideoID ] = useState()
-    console.log("FROM BROWSE COMP", listID, videoID)
+    const [ videoID, setVideoID ] = useState(-1)
 
     const [ showList, setShowList ] = useState(false);
     const videos = useSelector(state => state?.videos?.videos_list)
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log("FROM HANDLE ADD", listID, videoID)
+
         dispatch(addVideoToList(listID, videoID))
     }
 

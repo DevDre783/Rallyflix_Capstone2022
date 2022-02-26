@@ -28,6 +28,8 @@ export const loadVideosToList = (listId) => async dispatch => {
 
 
 export const addVideoToList = (listId, videoId) => async dispatch => {
+    console.log("addVideosToList.....", listId, videoId)
+
     const response = await fetch(`/api/my-lists/add-video`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -39,6 +41,7 @@ export const addVideoToList = (listId, videoId) => async dispatch => {
 
     if (response.ok) {
         const video = await response.json();
+        console.log(">>>>>>>>", video)
         dispatch(addVideo(video))
         return video
     }
@@ -52,7 +55,8 @@ const initialState = {
 
 const videosReducer = (state = initialState, action) => {
     let newState = {...state}
-    console.log("ENTERED REDUCER.........", action.videos)
+
+    console.log("ENTERED REDUCER.........", action.video)
     switch (action.type) {
         case LOAD: {
             let cleanState = {};
@@ -65,7 +69,7 @@ const videosReducer = (state = initialState, action) => {
         }
 
         case ADD_VIDEO: {
-            newState[action.video.id] = action.video
+            newState[action.video.videos[action.video.videos.length - 1].id] = action.video.videos[action.video.videos.length - 1]
             return newState
         }
 
