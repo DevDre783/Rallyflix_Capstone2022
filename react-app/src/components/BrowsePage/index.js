@@ -20,7 +20,10 @@ function BrowsePage({profileId}) {
     })
 
     const [ listID, setListID ] = useState()
-    const [ videoID, setVideoID ] = useState(-1)
+    const [ videoID, setVideoID ] = useState()
+    console.log("listID.........", listID)
+    console.log("videoID........", videoID)
+
 
     const [ showList, setShowList ] = useState(false);
     const videos = useSelector(state => state?.videos?.videos_list)
@@ -29,10 +32,10 @@ function BrowsePage({profileId}) {
         e.preventDefault()
 
         const addedVideo = dispatch(addVideoToList(listID, videoID))
-            .catch(async (res) => {
-                const data = await res.json();
-                if (data && data.errors) setErrors(data.errors)
-            });
+            // .catch(async (res) => {
+            //     const data = await res.json();
+            //     if (data && data.errors) setErrors(data.errors)
+            // });
 
         if (addedVideo) {
             history.push('/my-lists')

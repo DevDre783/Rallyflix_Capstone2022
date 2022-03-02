@@ -70,6 +70,7 @@ const videosReducer = (state = initialState, action) => {
 
         case ADD_VIDEO: {
             newState[action.video.videos[action.video.videos.length - 1].id] = action.video.videos[action.video.videos.length - 1]
+            console.log("from ADD_VIDEO", newState)
             return newState
         }
 
